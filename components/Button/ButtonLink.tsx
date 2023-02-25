@@ -1,13 +1,5 @@
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
-import { chakra, type SystemStyleObject } from "@chakra-ui/react";
-
-type ButtonLinkVariant = "primary" | "transparent" | "black";
-
-type ButtonLinkProps = {
-  variant?: ButtonLinkVariant;
-  href: NextLinkProps["href"];
-  children: React.ReactNode;
-};
+import { chakra } from "@chakra-ui/react";
 
 const buttonStyles = {
   primary: {
@@ -25,6 +17,19 @@ const buttonStyles = {
     color: "#2D2D2D",
     borderColor: "#2D2D2D",
   },
+  white: {
+    backgroundColor: "white",
+    color: "#81191A",
+    borderColor: "white",
+  },
+} as const;
+
+type ButtonLinkVariant = keyof typeof buttonStyles;
+
+type ButtonLinkProps = {
+  variant?: ButtonLinkVariant;
+  href: NextLinkProps["href"];
+  children: React.ReactNode;
 };
 
 const MagicLink = chakra<typeof NextLink, NextLinkProps>(NextLink, {
