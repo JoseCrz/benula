@@ -42,8 +42,31 @@ export default function Home() {
             }}
             fill
           />
+          <Box position="absolute" top={0} maxWidth="45%" py="200px">
+            <Container>
+              <Heading as="h1" fontSize="56px" color="white">
+                Nombre del postre del mes
+              </Heading>
+              <Text color="white" mt={6} fontSize="xl">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse varius enim in eros elementum tristique. Duis
+                cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
+                commodo diam libero vitae erat.
+              </Text>
+              <Flex mt={10}>
+                <Box mr={4}>
+                  <ButtonLink href="/">ver más</ButtonLink>
+                </Box>
+                <Box>
+                  <ButtonLink href="/" variant="transparent">
+                    conoce todos los postres
+                  </ButtonLink>
+                </Box>
+              </Flex>
+            </Container>
+          </Box>
+          <Header position="absolute" top={0} width="100%" transparent />
         </Box>
-        <Header position="absolute" top={0} />
       </Section>
       <Section pt={16} pb="157px" textAlign="center" position="relative">
         <Container>
@@ -119,11 +142,12 @@ export default function Home() {
                   <Image
                     src={item.imageSrc}
                     alt={item.altText}
-                    fill
+                    placeholder="blur"
                     style={{
                       objectFit: "cover",
                       objectPosition: "center",
                     }}
+                    fill
                   />
                 </Box>
                 <Heading as="h3" mt={8} fontSize="24px">
@@ -146,6 +170,7 @@ export default function Home() {
         <Image
           src={coffeeMethodsImage}
           alt="una repisa con distintos dispositivimos para preparar café como: V60, Chemex, Aeropress, Prensa Frances y más."
+          placeholder="blur"
           fill
         />
         <Box
@@ -193,11 +218,12 @@ export default function Home() {
                   <Image
                     src={item.imageSrc}
                     alt={item.altText}
-                    fill
+                    placeholder="blur"
                     style={{
                       objectFit: "cover",
                       objectPosition: "center",
                     }}
+                    fill
                   />
                 </Box>
                 <Box textAlign="center">
@@ -276,6 +302,7 @@ export default function Home() {
                 <Image
                   src={benulasImage}
                   alt="paula y benjamín afuera de benúla"
+                  placeholder="blur"
                 />
               </Box>
             </Grid>
