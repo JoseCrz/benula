@@ -15,7 +15,11 @@ export function Footer() {
     <Section py={20}>
       <Container>
         <Box as="footer">
-          <Flex justifyContent="space-between" alignItems="center">
+          <Flex
+            flexDirection={["column", "row"]}
+            justifyContent={["unset", "space-between"]}
+            alignItems="center"
+          >
             <Box>
               <Link href="/">
                 <Image
@@ -26,7 +30,7 @@ export function Footer() {
                 />
               </Link>
             </Box>
-            <Box>
+            <Box mt={[8, 0]}>
               <Box as="nav">
                 <Box
                   display="flex"
@@ -34,6 +38,7 @@ export function Footer() {
                   padding={0}
                   as="ul"
                   listStyleType="none"
+                  fontSize={["14px", "16px"]}
                 >
                   <Box as="li" mr={8}>
                     <Link href="/">
@@ -53,7 +58,7 @@ export function Footer() {
                 </Box>
               </Box>
             </Box>
-            <Box>
+            <Box mt={[8, 0]}>
               <Flex>
                 <Link href="/">
                   <Icon as={FaWhatsapp} mr={3} fontSize="24px" />
@@ -69,13 +74,14 @@ export function Footer() {
           <Flex justifyContent="center">
             <Box
               mt={8}
+              mx={[-2, 0]}
               backgroundColor="#F3F3F3"
-              px={6}
+              px={[4, 6]}
               py={2}
               borderRadius="8px"
             >
               <Flex alignItems="center">
-                <Text mr={3}>
+                <Text mr={[2, 3]} fontSize={["14px", "16px"]}>
                   <strong>reservaciones de 10 am a 5 pm</strong>
                 </Text>
 
@@ -84,12 +90,12 @@ export function Footer() {
                     <Flex
                       justifyContent="center"
                       alignItems="center"
-                      width="60px"
-                      height="60px"
+                      width={["48px", "60px"]}
+                      height={["48px", "60px"]}
                       borderRadius="50%"
                       backgroundColor="white"
                     >
-                      <Icon as={FaInstagram} fontSize="35px" />
+                      <Icon as={FaInstagram} fontSize={["24px", "35px"]} />
                     </Flex>
                   </Link>
                 </Box>
@@ -98,19 +104,19 @@ export function Footer() {
                     <Flex
                       justifyContent="center"
                       alignItems="center"
-                      width="60px"
-                      height="60px"
+                      width={["48px", "60px"]}
+                      height={["48px", "60px"]}
                       borderRadius="50%"
                       backgroundColor="white"
                     >
-                      <Icon as={FaWhatsapp} fontSize="35px" />
+                      <Icon as={FaWhatsapp} fontSize={["24px", "35px"]} />
                     </Flex>
                   </Link>
                 </Box>
               </Flex>
             </Box>
           </Flex>
-          <Text textAlign="center" mt={8}>
+          <Text textAlign="center" mt={8} fontSize={["12px", "16px"]}>
             2022 Benúla. Todos los derechos reservados
           </Text>
         </Box>
