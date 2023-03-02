@@ -73,7 +73,12 @@ Carousel.Slide = function Slide({
   seeAllUrl,
 }: SlideProps) {
   return (
-    <Box flex="0 0 1049px" minWidth={0} position="relative" paddingLeft={12}>
+    <Box
+      flex={["0 0 300px", "0 0 1049px"]}
+      minWidth={0}
+      position="relative"
+      paddingLeft={[3, 12]}
+    >
       <Box position="relative">
         <Box height={[600]}>
           <Image
@@ -92,8 +97,8 @@ Carousel.Slide = function Slide({
           top={0}
           bottom={0}
           width="100%"
-          px={12}
-          py={16}
+          px={[6, 12]}
+          py={[10, 16]}
         >
           <Flex
             width="100%"
@@ -104,30 +109,31 @@ Carousel.Slide = function Slide({
             <Box>
               <Heading color="white" display="inline" fontSize="40px">
                 {name}{" "}
-                <Text
-                  as="span"
-                  color="#81191A"
-                  fontSize="24px"
-                  fontWeight={400}
-                >
-                  {author}
-                </Text>
               </Heading>
+              <Text
+                as="span"
+                display={["block", "inline"]}
+                color="#81191A"
+                fontSize="24px"
+                fontWeight={400}
+              >
+                {author}
+              </Text>
               <Text fontSize="20px" color="white">
                 postre de {month}
               </Text>
             </Box>
             <Box>
-              <Flex>
-                <Box mr={4}>
+              <Box display={["block", "flex"]}>
+                <Box mr={[0, 4]}>
                   <ButtonLink href={seeMoreUrl}>ver más</ButtonLink>
                 </Box>
-                <Box>
+                <Box mt={[4, 0]}>
                   <ButtonLink href={seeAllUrl} variant="transparent">
                     conoce todos los postres
                   </ButtonLink>
                 </Box>
-              </Flex>
+              </Box>
             </Box>
           </Flex>
         </Box>
