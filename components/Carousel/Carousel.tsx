@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image, { type ImageProps } from "next/image";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import useEmblaCarousel from "embla-carousel-react";
-import times from "lodash.times";
 import { ButtonLink } from "@/components";
 
-type CarouselProps = { totalSlides: number; children: React.ReactNode };
+type CarouselProps = { children: React.ReactNode };
 
-export function Carousel({ totalSlides, children }: CarouselProps) {
-  const [activeSlide, setActiveSlide] = useState(0);
+export function Carousel({ children }: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [activeSnap, setActiveSnap] = useState(0);
 
   function goToSlide(index: number) {
-    setActiveSlide(index);
-    emblaApi?.scrollTo?.(index);
+    if (emblaApi) emblaApi.scrollTo(index);
   }
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    emblaApi.on("select", () => setActiveSnap(emblaApi.selectedScrollSnap()));
+  }, [emblaApi]);
 
   return (
     <Box ref={emblaRef} overflow="hidden">
@@ -24,8 +29,8 @@ export function Carousel({ totalSlides, children }: CarouselProps) {
       <Box mt={10}>
         <Flex justifyContent="center">
           <Flex>
-            {times(totalSlides, (index) => {
-              const isCurrentSlide = index === activeSlide;
+            {scrollSnaps.map((_, index) => {
+              const isCurrentSlide = index === activeSnap;
               return (
                 <Box
                   key={index}

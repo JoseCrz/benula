@@ -99,7 +99,7 @@ export default function Home() {
         </Box>
       </Section>
       <Section backgroundColor="#FAFAFA" pb={12}>
-        <Carousel totalSlides={carouselData.length}>
+        <Carousel>
           {carouselData.map((item) => (
             <Carousel.Slide
               key={item.id}
