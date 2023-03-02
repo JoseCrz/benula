@@ -30,7 +30,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Section position="relative">
-        <Box position="relative" width="100%" height={865}>
+        <Box
+          position="relative"
+          width="100%"
+          height={["auto", 865]}
+          minHeight={["100vh", "auto"]}
+        >
           <Image
             src={nubeImage}
             alt="Nube de Guayaba"
@@ -42,33 +47,43 @@ export default function Home() {
             }}
             fill
           />
-          <Box position="absolute" top={0} maxWidth="45%" py="200px">
+          <Box
+            position="absolute"
+            top={0}
+            maxWidth={["100%", "45%"]}
+            py="200px"
+          >
             <Container>
-              <Heading as="h1" fontSize="56px" color="white">
+              <Heading as="h1" fontSize={["42px", "56px"]} color="white">
                 Nombre del postre del mes
               </Heading>
-              <Text color="white" mt={6} fontSize="xl">
+              <Text color="white" mt={6} fontSize={["16px", "xl"]}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Suspendisse varius enim in eros elementum tristique. Duis
                 cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
                 commodo diam libero vitae erat.
               </Text>
-              <Flex mt={10}>
-                <Box mr={4}>
+              <Box display={["block", "flex"]} mt={10}>
+                <Box mr={[0, 4]}>
                   <ButtonLink href="/">ver más</ButtonLink>
                 </Box>
-                <Box>
+                <Box mt={[4, 0]}>
                   <ButtonLink href="/" variant="transparent">
                     conoce todos los postres
                   </ButtonLink>
                 </Box>
-              </Flex>
+              </Box>
             </Container>
           </Box>
           <Header position="absolute" top={0} width="100%" transparent />
         </Box>
       </Section>
-      <Section pt={16} pb="157px" textAlign="center" position="relative">
+      <Section
+        pt={["200px", 16]}
+        pb={["200px", "157px"]}
+        textAlign="center"
+        position="relative"
+      >
         <Container>
           <Box
             display="inline-block"
@@ -81,7 +96,7 @@ export default function Home() {
               <strong>¿alguien dijo postres?</strong>
             </Text>
           </Box>
-          <Heading mt={4} fontSize="40px">
+          <Heading mt={4} fontSize={["42px", "40px"]}>
             te presentamos{" "}
             <Text as="span" color="#81191A">
               nuestros favoritos
@@ -94,7 +109,13 @@ export default function Home() {
             <ButtonLink href="/menu">conócelos todos aquí</ButtonLink>
           </Box>
         </Container>
-        <Box position="absolute" width="100%" height={130} bottom={0}>
+        <Box
+          display={["none", "block"]}
+          position="absolute"
+          width="100%"
+          height={130}
+          bottom={0}
+        >
           <Image src={waveSvg} alt="" fill />
         </Box>
       </Section>
@@ -119,18 +140,25 @@ export default function Home() {
         background="linear-gradient(to bottom, #FAFAFA, #E4D4C4)"
       >
         <Container>
-          <Flex justifyContent="space-between">
+          <Flex
+            flexDirection={["column", "row"]}
+            justifyContent="space-between"
+          >
             <Heading as="h2" fontSize="42px">
               café <Highlight>bello</Highlight>, postres{" "}
               <Highlight>bellos</Highlight>
             </Heading>
-            <Text maxWidth="565px">
+            <Text mt={[4, 0]} maxWidth={["100%", "565px"]}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Suspendisse varius enim in eros elementum tristique. Duis cursus,
               mi quis viverra ornare, eros dolor interdum nulla.
             </Text>
           </Flex>
-          <Grid mt={20} gridTemplateColumns="repeat(3, 1fr)" gap={12}>
+          <Grid
+            mt={[10, 20]}
+            gridTemplateColumns={["1fr", "repeat(3, 1fr)"]}
+            gap={12}
+          >
             {gridData.map((item) => (
               <Box key={item.id}>
                 <Box
@@ -166,11 +194,15 @@ export default function Home() {
           </Grid>
         </Container>
       </Section>
-      <Section position="relative" width="100%" height="378px">
+      <Section position="relative" width="100%" height={["607px", "378px"]}>
         <Image
           src={coffeeMethodsImage}
           alt="una repisa con distintos dispositivimos para preparar café como: V60, Chemex, Aeropress, Prensa Frances y más."
           placeholder="blur"
+          style={{
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
           fill
         />
         <Box
@@ -179,22 +211,24 @@ export default function Home() {
           bottom={0}
           width="100%"
           backgroundColor="rgba(0,0,0,0.4)"
+          pb={["112px", 0]}
         >
           <Container height="100%">
             <Flex
-              justifyContent="space-between"
-              alignItems="center"
+              flexDirection={["column", "row"]}
+              justifyContent={["flex-end", "space-between"]}
+              alignItems={["left", "center"]}
               height="100%"
             >
               <Box>
-                <Heading as="h2" fontSize="80px" color="white">
+                <Heading as="h2" fontSize={["42px", "80px"]} color="white">
                   métodos de café
                 </Heading>
-                <Text mt={3} fontWeight="20px" color="white">
+                <Text mt={3} fontSize={["16px", "20px"]} color="white">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </Text>
               </Box>
-              <Box>
+              <Box mt={[6, 0]}>
                 <ButtonLink href="/" variant="white">
                   conócelos todos aquí
                 </ButtonLink>
@@ -203,15 +237,19 @@ export default function Home() {
           </Container>
         </Box>
       </Section>
-      <Section py={24}>
+      <Section py={[12, 24]}>
         <Container>
           <Heading as="h2" fontSize="42px">
             el equipo <Highlight>benúla</Highlight>
           </Heading>
-          <Text mt={4}>
+          <Text mt={[3, 4]}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </Text>
-          <Grid mt={12} gridTemplateColumns="repeat(2, 1fr)" gap={16}>
+          <Grid
+            mt={[10, 12]}
+            gridTemplateColumns={["1fr", "repeat(2, 1fr)"]}
+            gap={16}
+          >
             {staffData.map((item) => (
               <Box key={item.id}>
                 <Box position="relative" width="100%" height="405px">
@@ -254,10 +292,10 @@ export default function Home() {
           </Grid>
         </Container>
       </Section>
-      <Section py={24} backgroundColor="#F6F5F4">
+      <Section pt={[20, 24]} pb={[0, 24]} backgroundColor="#81191A">
         <Container>
           <Box backgroundColor="#81191A">
-            <Grid gridTemplateColumns="1fr 2fr">
+            <Grid gridTemplateColumns={["1fr", "1fr 2fr"]} gap={[20, 0]}>
               <Box textAlign="center" color="white" alignSelf="center">
                 <Text>estamos en pleno</Text>
                 <Text fontSize="36px">
@@ -298,7 +336,7 @@ export default function Home() {
                   dom 10:00 am - 8:00 pm
                 </Text>
               </Box>
-              <Box>
+              <Box mx={[-4, 0]}>
                 <Image
                   src={benulasImage}
                   alt="paula y benjamín afuera de benúla"
