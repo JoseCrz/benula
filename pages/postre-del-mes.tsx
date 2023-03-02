@@ -8,7 +8,7 @@ import { gridData } from "@/mocks";
 export default function DesertOfTheMonth() {
   return (
     <Layout>
-      <Section pt={18} pb={12}>
+      <Section pt={[16, 18]} pb={[16, 12]}>
         <Container>
           <Heading as="h1" fontSize="42px">
             postre del mes
@@ -16,8 +16,16 @@ export default function DesertOfTheMonth() {
           <Text fontSize="18px" mt={4}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </Text>
-          <Flex mt={12} alignItems="center">
-            <Box position="relative" width="656px" height="510px">
+          <Flex
+            flexDirection={["column", "row"]}
+            mt={[10, 12]}
+            alignItems="center"
+          >
+            <Box
+              position="relative"
+              width={["100%", "656px"]}
+              height={["320px", "510px"]}
+            >
               <Image
                 src={nubeImage}
                 alt="nube de guayaba"
@@ -29,7 +37,7 @@ export default function DesertOfTheMonth() {
                 fill
               />
             </Box>
-            <Box ml={12} maxWidth="411px">
+            <Box mt={[10, 0]} ml={[0, 12]} maxWidth={["100%", "411px"]}>
               <Text fontSize="14px">
                 <strong>chef victor mendoza</strong>
               </Text>
@@ -40,16 +48,16 @@ export default function DesertOfTheMonth() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Suspendisse varius enim in eros.
               </Text>
-              <Flex mt={6}>
-                <Box mr={6}>
+              <Box display={["block", "flex"]} mt={[4, 6]}>
+                <Box mr={[0, 6]}>
                   <ButtonLink href="/">ver más</ButtonLink>
                 </Box>
-                <Box>
+                <Box mt={[4, 0]}>
                   <ButtonLink href="/" variant="black">
                     conoce todos los postres
                   </ButtonLink>
                 </Box>
-              </Flex>
+              </Box>
             </Box>
           </Flex>
         </Container>
@@ -57,12 +65,16 @@ export default function DesertOfTheMonth() {
       <Section py={12} backgroundColor="#FAFAFA">
         <Container>
           <Grid
-            gridTemplateColumns="repeat(2, 1fr)"
+            gridTemplateColumns={["1fr", "repeat(2, 1fr)"]}
             columnGap={12}
             rowGap="61px"
           >
             {gridData.map((item) => (
-              <Box key={item.id}>
+              <Box
+                key={item.id}
+                borderBottom={["1px solid #DADADA", "none"]}
+                pb={[10, 0]}
+              >
                 <Box position="relative" width="100%" height="300px">
                   <Image
                     src={item.imageSrc}
@@ -86,13 +98,7 @@ export default function DesertOfTheMonth() {
             ))}
           </Grid>
           <Flex justifyContent="center" mt={20}>
-            <Button
-              backgroundColor="transparent"
-              // borderBottom="1px solid black"
-              // borderBottomRadius={0}
-            >
-              cargar más...
-            </Button>
+            <Button backgroundColor="transparent">cargar más...</Button>
           </Flex>
         </Container>
       </Section>
