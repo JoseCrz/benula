@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon } from "@chakra-ui/react";
+import { FaBars } from "react-icons/fa";
 import { ButtonLink, Container, type ContainerProps } from "@/components";
 
 export type HeaderProps = {
@@ -23,7 +24,7 @@ export function Header({ transparent = false, ...rest }: HeaderProps) {
               />
             </Link>
           </Box>
-          <Flex alignItems="center">
+          <Flex display={["none", "flex"]} alignItems="center">
             <Box color={transparent ? "white" : "black"} mr={6}>
               <Link href="/postre-del-mes">postre del mes</Link>
             </Box>
@@ -34,6 +35,13 @@ export function Header({ transparent = false, ...rest }: HeaderProps) {
               conoce nuestro menú
             </ButtonLink>
           </Flex>
+          <Button display={["block", "none"]} backgroundColor="transparent">
+            <Icon
+              as={FaBars}
+              color={transparent ? "white" : "black"}
+              fontSize="24px"
+            />
+          </Button>
         </Flex>
       </Box>
     </Container>
