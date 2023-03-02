@@ -46,10 +46,12 @@ export function ButtonLink({
     <MagicLink
       href={href}
       {...buttonStyle}
+      display="inline-block"
       fontWeight="bold"
       borderRadius="30px"
       borderStyle="solid"
       borderWidth="1px"
+      fontSize={["12px", "14px"]}
       px="34px"
       py={2}
       _hover={{
