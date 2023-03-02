@@ -73,51 +73,64 @@ Carousel.Slide = function Slide({
   seeAllUrl,
 }: SlideProps) {
   return (
-    <Box flex="0 0 1049px" minWidth={0} paddingLeft={12}>
-      <Image
-        src={imageSrc}
-        alt={altText}
-        width={1049}
-        height={600}
-        placeholder="blur"
-        style={{
-          maxHeight: "600px",
-          objectFit: "cover",
-          objectPosition: "center",
-        }}
-        // fill
-      />
-      <Box position="absolute" top={0} bottom={0} width="100%" px={12} py={16}>
-        <Flex
+    <Box flex="0 0 1049px" minWidth={0} position="relative" paddingLeft={12}>
+      <Box position="relative">
+        <Box height={[600]}>
+          <Image
+            src={imageSrc}
+            alt={altText}
+            placeholder="blur"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
+            fill
+          />
+        </Box>
+        <Box
+          position="absolute"
+          top={0}
+          bottom={0}
           width="100%"
-          height="100%"
-          flexDirection="column"
-          justifyContent="space-between"
+          px={12}
+          py={16}
         >
-          <Box>
-            <Heading color="white" display="inline" fontSize="40px">
-              {name}{" "}
-              <Text as="span" color="#81191A" fontSize="24px" fontWeight={400}>
-                {author}
+          <Flex
+            width="100%"
+            height="100%"
+            flexDirection="column"
+            justifyContent="space-between"
+          >
+            <Box>
+              <Heading color="white" display="inline" fontSize="40px">
+                {name}{" "}
+                <Text
+                  as="span"
+                  color="#81191A"
+                  fontSize="24px"
+                  fontWeight={400}
+                >
+                  {author}
+                </Text>
+              </Heading>
+              <Text fontSize="20px" color="white">
+                postre de {month}
               </Text>
-            </Heading>
-            <Text fontSize="20px" color="white">
-              postre de {month}
-            </Text>
-          </Box>
-          <Box>
-            <Flex>
-              <Box mr={4}>
-                <ButtonLink href={seeMoreUrl}>ver más</ButtonLink>
-              </Box>
-              <Box>
-                <ButtonLink href={seeAllUrl} variant="transparent">
-                  conoce todos los postres
-                </ButtonLink>
-              </Box>
-            </Flex>
-          </Box>
-        </Flex>
+            </Box>
+            <Box>
+              <Flex>
+                <Box mr={4}>
+                  <ButtonLink href={seeMoreUrl}>ver más</ButtonLink>
+                </Box>
+                <Box>
+                  <ButtonLink href={seeAllUrl} variant="transparent">
+                    conoce todos los postres
+                  </ButtonLink>
+                </Box>
+              </Flex>
+            </Box>
+          </Flex>
+        </Box>
       </Box>
     </Box>
   );
