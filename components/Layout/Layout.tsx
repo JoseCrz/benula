@@ -1,7 +1,12 @@
 import Head from "next/head";
-import { Header, Footer } from "@/components";
+import { Header, type HeaderProps, Footer } from "@/components";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+type LayoutProps = {
+  headerVariant?: HeaderProps["variant"];
+  children: React.ReactNode;
+};
+
+export function Layout({ headerVariant, children }: LayoutProps) {
   return (
     <>
       <Head>
@@ -10,7 +15,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header variant={headerVariant} />
       {children}
       <Footer />
     </>
