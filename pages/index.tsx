@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { Box, Flex, Grid, Heading, Icon, Text } from "@chakra-ui/react";
@@ -21,7 +20,7 @@ import { carouselData, gridData, staffData } from "@/mocks";
 
 export default function Home() {
   return (
-    <Layout headerVariant="transparent">
+    <Layout title="Benúla" headerVariant="transparent">
       <Section mt={["-66px", "-90px"]}>
         <Box
           position="relative"

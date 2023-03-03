@@ -7,7 +7,7 @@ import { gridData } from "@/mocks";
 
 export default function DesertOfTheMonth() {
   return (
-    <Layout>
+    <Layout title="Postre del mes | Benúla">
       <Section pt={[16, 18]} pb={[16, 12]}>
         <Container>
           <Heading as="h1" fontSize="42px">
