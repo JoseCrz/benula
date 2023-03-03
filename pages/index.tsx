@@ -7,10 +7,9 @@ import {
   ButtonLink,
   Carousel,
   Container,
-  Footer,
-  Header,
   Highlight,
   Section,
+  Layout,
 } from "@/components";
 
 import nubeImage from "@/public/images/nube.jpeg";
@@ -22,14 +21,8 @@ import { carouselData, gridData, staffData } from "@/mocks";
 
 export default function Home() {
   return (
-    <>
-      <Head>
-        <title>Benúla</title>
-        <meta name="description" content="Café bello, postres bellos" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Section position="relative">
+    <Layout headerVariant="transparent">
+      <Section mt={["-66px", "-90px"]}>
         <Box
           position="relative"
           width="100%"
@@ -75,7 +68,6 @@ export default function Home() {
               </Box>
             </Container>
           </Box>
-          <Header position="absolute" top={0} width="100%" transparent />
         </Box>
       </Section>
       <Section
@@ -347,7 +339,6 @@ export default function Home() {
           </Box>
         </Container>
       </Section>
-      <Footer />
-    </>
+    </Layout>
   );
 }
