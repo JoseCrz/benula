@@ -26,7 +26,7 @@ const buttonStyles = {
 
 type ButtonLinkVariant = keyof typeof buttonStyles;
 
-type ButtonLinkProps = {
+export type ButtonLinkProps = {
   variant?: ButtonLinkVariant;
   href: NextLinkProps["href"];
   children: React.ReactNode;
