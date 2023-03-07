@@ -1,5 +1,6 @@
 import type { MenuItem } from "@/types";
 import { useState, forwardRef } from "react";
+import Link from "next/link";
 import chunk from "lodash.chunk";
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Accordion from "@radix-ui/react-accordion";
@@ -161,6 +162,15 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
                         </Text>
                       </Text>
                     ))}
+                  {item.detailUrl && (
+                    <Text
+                      textDecoration="underline"
+                      mt={2}
+                      fontSize={["16px", "20px"]}
+                    >
+                      <Link href={`/menu${item.detailUrl}`}>ver más</Link>
+                    </Text>
+                  )}
                 </Box>
               ))}
             </Grid>
@@ -175,14 +185,13 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
 // Mobile Menu
 
 function MobileMenu() {
-  const [currentValue, setCurrentValue] = useState(categories.mocktails);
+  const [currentValue, setCurrentValue] = useState([categories.mocktails]);
   return (
     <Box display={["block", "none"]} mt={16}>
       <Accordion.Root
-        type="single"
+        type="multiple"
         value={currentValue}
         onValueChange={setCurrentValue}
-        collapsible
         asChild
       >
         <Grid rowGap="18px">
@@ -218,7 +227,7 @@ function MobileMenu() {
               value={categories.desserts}
               currentValue={currentValue}
             >
-              brunch
+              desserts
             </AccordionTrigger>
             <AccordionContent menuItems={dessertsData} />
           </Accordion.Item>
@@ -230,12 +239,12 @@ function MobileMenu() {
 
 type AccordionTriggerProps = {
   value: string;
-  currentValue: string;
+  currentValue: string[];
 } & Accordion.AccordionTriggerProps;
 
 const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
   ({ value, currentValue, children, ...rest }, ref) => {
-    const isActive = value === currentValue;
+    const isActive = currentValue.includes(value);
     return (
       <Accordion.Header>
         <Accordion.Trigger asChild ref={ref} {...rest}>
@@ -306,6 +315,11 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
                     </Text>
                   </Text>
                 ))}
+              {item.detailUrl && (
+                <Text textDecoration="underline" mt={2}>
+                  <Link href={`/menu${item.detailUrl}`}>ver más</Link>
+                </Text>
+              )}
             </Box>
           ))}
         </Box>
