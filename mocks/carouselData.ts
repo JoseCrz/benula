@@ -3,7 +3,7 @@ import type { ImageProps } from "next/image";
 import nubeImage from "@/public/images/mocks/nube.jpeg";
 import avellanaImage from "@/public/images/mocks/avellana.jpeg";
 import azaharImage from "@/public/images/mocks/azahar.jpeg";
-import pistacheImage from "@/public/images/mocks/pistache.jpeg";
+import pistacheImage from "@/public/images/mocks/pistache-1.jpeg";
 import vainillaImage from "@/public/images/mocks/vainilla.jpeg";
 
 type MockCarouselItem = {

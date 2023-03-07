@@ -1,4 +1,10 @@
 import type { MenuItem } from "@/types";
+import pistacheImage1 from "@/public/images/mocks/pistache-1.jpeg";
+import pistacheImage2 from "@/public/images/mocks/pistache-2.jpeg";
+import pistacheImage3 from "@/public/images/mocks/pistache-3.jpeg";
+import pistacheImage4 from "@/public/images/mocks/pistache-4.jpeg";
+import pistacheImage5 from "@/public/images/mocks/pistache-5.jpeg";
+import pistacheImage6 from "@/public/images/mocks/pistache-6.jpeg";
 
 export const mocktailsData: MenuItem[] = [
   {
@@ -144,6 +150,30 @@ export const dessertsData: MenuItem[] = [
     abstract:
       "frangipane de pistache y almendra, compota de fresas, ganache de pistache y chocolate blanco.",
     basePrice: 75,
+    detailUrl: "/espiral-de-pistache",
+    pictures: [
+      {
+        pictureSrc: pistacheImage1,
+        pictureAlt: "some alt",
+      },
+      { pictureSrc: pistacheImage2, pictureAlt: "other alt" },
+      {
+        pictureSrc: pistacheImage3,
+        pictureAlt: "other alt",
+      },
+      {
+        pictureSrc: pistacheImage4,
+        pictureAlt: "other alt",
+      },
+      {
+        pictureSrc: pistacheImage5,
+        pictureAlt: "other alt",
+      },
+      {
+        pictureSrc: pistacheImage6,
+        pictureAlt: "other alt",
+      },
+    ],
   },
   {
     name: "tarta avellana y chocolate amargo",
