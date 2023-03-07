@@ -22,13 +22,13 @@ type HeaderVariantStyleMap = {
 const headerVariantsStyle: HeaderVariantStyleMap = {
   default: {
     base: {
-      logoUrl: "images/logo-black.svg",
+      logoUrl: "/images/logo-black.svg",
       textColor: "black",
       buttonLinkVariant: "primary",
       backgroundColor: "white",
     },
     solid: {
-      logoUrl: "images/logo-black.svg",
+      logoUrl: "/images/logo-black.svg",
       textColor: "black",
       buttonLinkVariant: "primary",
       backgroundColor: "white",
@@ -36,13 +36,13 @@ const headerVariantsStyle: HeaderVariantStyleMap = {
   },
   transparent: {
     base: {
-      logoUrl: "images/logo-white.svg",
+      logoUrl: "/images/logo-white.svg",
       textColor: "white",
       buttonLinkVariant: "transparent",
       backgroundColor: "transparent",
     },
     solid: {
-      logoUrl: "images/logo-black.svg",
+      logoUrl: "/images/logo-black.svg",
       textColor: "black",
       buttonLinkVariant: "primary",
       backgroundColor: "white",
