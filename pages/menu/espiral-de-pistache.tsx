@@ -24,9 +24,13 @@ export default function MenuDetail() {
               </Text>
             </Flex>
           </Link>
-          <Grid gridTemplateColumns="1fr 1fr" columnGap={20}>
-            <Box pr={[10]}>
-              <Heading as="h1" fontSize={["60px"]} color="#81191A">
+          <Grid
+            gridTemplateColumns={["1fr", "1fr 1fr"]}
+            columnGap={20}
+            rowGap={6}
+          >
+            <Box pr={[0, 10]}>
+              <Heading as="h1" fontSize={["42px", "60px"]} color="#81191A">
                 espiral de pistache
               </Heading>
               <Flex alignItems="center" mt={[6]}>
@@ -45,7 +49,7 @@ export default function MenuDetail() {
                 </Text>
               </Flex>
               <Box
-                width="95%"
+                width={["100%", "95%"]}
                 height="1px"
                 mt={[6]}
                 backgroundColor="rgba(0, 0, 0, 0.04)"
@@ -53,6 +57,7 @@ export default function MenuDetail() {
               <Box
                 backgroundColor="#F1F0F0"
                 borderRadius="20px"
+                mt={[6]}
                 py={[6]}
                 px={[4]}
               >
