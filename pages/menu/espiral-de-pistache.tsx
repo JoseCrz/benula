@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { Box, Button, Flex, Grid, Heading, Icon, Text } from "@chakra-ui/react";
 import useEmblaCarousel from "embla-carousel-react";
 
@@ -12,22 +12,18 @@ import { dessertsData } from "@/mocks/menuData";
 const pistacheData = dessertsData[0];
 
 export default function MenuDetail() {
-  const router = useRouter();
-
   return (
     <Layout title="Espiral de Pistache | Benúla">
       <Section backgroundColor="#FAFAFA">
         <Container pt={[18]} pb={[8]}>
-          <Button
-            fontWeight="bold"
-            backgroundColor="transparent"
-            onClick={() => router.back()}
-          >
-            <Icon as={BiArrowBack} fontSize="20px" mr={1} />
-            <Text as="span" textDecoration="underline">
-              ir para atrás
-            </Text>
-          </Button>
+          <Link href="/menu">
+            <Flex fontWeight="bold" alignItems="center">
+              <Icon as={BiArrowBack} fontSize="20px" mr={1} />
+              <Text as="span" textDecoration="underline">
+                ir para atrás
+              </Text>
+            </Flex>
+          </Link>
           <Grid gridTemplateColumns="1fr 1fr" columnGap={20}>
             <Box pr={[10]}>
               <Heading as="h1" fontSize={["60px"]} color="#81191A">
