@@ -4,11 +4,9 @@ import Link from "next/link";
 import chunk from "lodash.chunk";
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Accordion from "@radix-ui/react-accordion";
+
 import { Box, Button, Icon, Flex, Grid, Heading, Text } from "@chakra-ui/react";
-import {
-  IoChevronDownCircleOutline,
-  IoChevronUpCircleOutline,
-} from "react-icons/io5";
+import { IoChevronDownCircleOutline } from "react-icons/io5";
 import { Layout, Section, Container } from "@/components";
 
 import { mocktailsData, brunchData, sandwichData, dessertsData } from "@/mocks";
@@ -185,48 +183,30 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
 // Mobile Menu
 
 function MobileMenu() {
-  const [currentValue, setCurrentValue] = useState([categories.mocktails]);
   return (
     <Box display={["block", "none"]} mt={16}>
-      <Accordion.Root
-        type="multiple"
-        value={currentValue}
-        onValueChange={setCurrentValue}
-        asChild
-      >
+      <Accordion.Root type="multiple" asChild>
         <Grid rowGap="18px">
           <Accordion.Item value={categories.mocktails}>
-            <AccordionTrigger
-              value={categories.mocktails}
-              currentValue={currentValue}
-            >
+            <AccordionTrigger value={categories.mocktails}>
               mocktails
             </AccordionTrigger>
             <AccordionContent menuItems={mocktailsData} />
           </Accordion.Item>
           <Accordion.Item value={categories.brunch}>
-            <AccordionTrigger
-              value={categories.brunch}
-              currentValue={currentValue}
-            >
+            <AccordionTrigger value={categories.brunch}>
               brunch
             </AccordionTrigger>
             <AccordionContent menuItems={brunchData} />
           </Accordion.Item>
           <Accordion.Item value={categories.sandwiches}>
-            <AccordionTrigger
-              value={categories.sandwiches}
-              currentValue={currentValue}
-            >
+            <AccordionTrigger value={categories.sandwiches}>
               entre panes
             </AccordionTrigger>
             <AccordionContent menuItems={sandwichData} />
           </Accordion.Item>
           <Accordion.Item value={categories.desserts}>
-            <AccordionTrigger
-              value={categories.desserts}
-              currentValue={currentValue}
-            >
+            <AccordionTrigger value={categories.desserts}>
               desserts
             </AccordionTrigger>
             <AccordionContent menuItems={dessertsData} />
@@ -237,17 +217,22 @@ function MobileMenu() {
   );
 }
 
+const TRIGGER_CLASSNAME = "AccordionTrigger";
+
 type AccordionTriggerProps = {
   value: string;
-  currentValue: string[];
 } & Accordion.AccordionTriggerProps;
 
 const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
-  ({ value, currentValue, children, ...rest }, ref) => {
-    const isActive = currentValue.includes(value);
+  ({ value, children, ...rest }, ref) => {
     return (
       <Accordion.Header>
-        <Accordion.Trigger asChild ref={ref} {...rest}>
+        <Accordion.Trigger
+          asChild
+          ref={ref}
+          {...rest}
+          className={TRIGGER_CLASSNAME}
+        >
           <Button
             width="100%"
             display="flex"
@@ -266,11 +251,16 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
           >
             {children}
             <Icon
-              as={
-                isActive ? IoChevronUpCircleOutline : IoChevronDownCircleOutline
-              }
+              aria-hidden
+              as={IoChevronDownCircleOutline}
               color="#721B1B"
               fontSize="24px"
+              sx={{
+                transition: "transform 300ms",
+                [`.${TRIGGER_CLASSNAME}[data-state='open'] &`]: {
+                  transform: "rotate(180deg)",
+                },
+              }}
             />
           </Button>
         </Accordion.Trigger>
@@ -289,7 +279,13 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
   ({ menuItems, ...rest }, ref) => {
     return (
       <Accordion.Content ref={ref} asChild {...rest}>
-        <Box border="1px solid #D7D7D7" borderTop="none" px={4} py={3}>
+        <Box
+          border="1px solid #D7D7D7"
+          borderTop="none"
+          px={4}
+          py={3}
+          overflow="hidden"
+        >
           {menuItems.map((item) => (
             <Box key={item.name} borderBottom="1px solid #E4E4E4" pt={2} pb={5}>
               <Flex alignItems="baseline">
