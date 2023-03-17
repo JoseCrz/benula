@@ -1,9 +1,21 @@
 import { defineField, defineType } from "sanity";
 import { BiFoodMenu } from "react-icons/Bi";
 
+export const MENU_CATEGORY_NAME = "menuCategory";
+
+export type MenuCategory = {
+  _id: string;
+  name: string;
+  placement: number;
+  availability?: {
+    startTime: number;
+    endTime: number;
+  };
+};
+
 export const menuCategoryType = defineType({
   type: "document",
-  name: "menuCategory",
+  name: MENU_CATEGORY_NAME,
   title: "Categoria de Menú",
   icon: BiFoodMenu,
   fields: [
@@ -14,9 +26,16 @@ export const menuCategoryType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "placement",
+      title: "orden en el menú",
+      type: "number",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "shouldAddLimitedService",
       title: "servicio limitado",
       type: "boolean",
+      initialValue: false,
     }),
     defineField({
       name: "availability",
