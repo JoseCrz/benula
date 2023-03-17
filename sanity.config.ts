@@ -1,9 +1,8 @@
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
 
-import { SANITY_PROJECT_ID, SANITY_DATASET } from "./lib/sanity.api";
-
-import { menuCategoryType, menuItemType } from "./schemas";
+import { SANITY_PROJECT_ID, SANITY_DATASET } from "./sanity/data";
+import { menuCategoryType, menuItemType } from "./sanity/schemas";
 
 export default defineConfig({
   basePath: "/studio",
