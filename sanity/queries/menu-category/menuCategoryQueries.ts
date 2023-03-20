@@ -4,7 +4,13 @@ import { sanityClient } from "@/sanity/client/sanityClient";
 import { MENU_CATEGORY_NAME, type MenuCategory } from "@/sanity/schemas";
 
 export const allMenuCategoriesQuery = groq`
-*[_type == "${MENU_CATEGORY_NAME}"] | order(placement asc)
+*[_type == "${MENU_CATEGORY_NAME}"] | order(placement asc) {
+  _id, 
+  name,
+  placement,
+  availability,
+  menuItems[]->{_id, name, price, excerpt, options, slug}
+}
 `;
 
 export async function getAllMenuCategories(): Promise<MenuCategory[]> {
