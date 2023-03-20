@@ -1,36 +1,34 @@
 import { defineField, defineType } from "sanity";
 import { IoFastFoodOutline } from "react-icons/io5";
 
+export const MENU_ITEM_NAME = "menuItem";
+
+export type MenuItem = {
+  _id: string;
+  name: string;
+  price: number;
+  excerpt: string;
+  hasOptions: boolean;
+  options?: {
+    optionPrice: number;
+    optionDescription: string;
+  }[];
+  hasDetailPage: boolean;
+  images: string[];
+  description?: string;
+  slug?: string;
+};
+
 export const menuItemType = defineType({
-  name: "menuItem",
+  name: MENU_ITEM_NAME,
   title: "Menu Item",
   type: "document",
   icon: IoFastFoodOutline,
   fields: [
     defineField({
-      name: "menuCategory",
-      title: "categoria",
-      type: "reference",
-      to: {
-        type: "menuCategory",
-      },
-    }),
-
-    defineField({
       name: "name",
       title: "Nombre",
       type: "string",
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slug",
-      options: {
-        source: "name",
-        maxLength: 96,
-        isUnique: (value, context) => context.defaultIsUnique(value, context),
-      },
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -39,18 +37,18 @@ export const menuItemType = defineType({
       type: "number",
     }),
     defineField({
-      name: "images",
-      title: "imagenes",
-      type: "array",
-      of: [{ type: "image" }],
+      name: "excerpt",
+      title: "descripción breve",
+      type: "text",
     }),
-
     defineField({
-      name: "shouldAddOptions",
+      name: "hasOptions",
       title: "agregar opciones",
       type: "boolean",
+      initialValue: false,
     }),
     defineField({
+      hidden: ({ document }) => !document?.hasOptions,
       name: "options",
       title: "Opciones",
       type: "array",
@@ -73,23 +71,36 @@ export const menuItemType = defineType({
           ],
         },
       ],
-      hidden: ({ document }) => !document?.shouldAddOptions,
     }),
     defineField({
-      name: "excerpt",
-      title: "descripción breve",
-      type: "text",
-    }),
-    defineField({
-      name: "shouldAddDescription",
-      title: "agregar descripción larga",
+      name: "hasDetailPage",
+      title: "agregar página de detalle",
       type: "boolean",
+      initialValue: false,
     }),
     defineField({
+      hidden: ({ document }) => !document?.hasDetailPage,
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "name",
+        maxLength: 96,
+        isUnique: (value, context) => context.defaultIsUnique(value, context),
+      },
+    }),
+    defineField({
+      hidden: ({ document }) => !document?.hasDetailPage,
       name: "description",
       title: "descripción larga",
       type: "text",
-      hidden: ({ document }) => !document?.shouldAddDescription,
+    }),
+    defineField({
+      hidden: ({ document }) => !document?.hasDetailPage,
+      name: "images",
+      title: "imagenes",
+      type: "array",
+      of: [{ type: "image" }],
     }),
   ],
 });
