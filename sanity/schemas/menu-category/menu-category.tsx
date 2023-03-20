@@ -1,12 +1,18 @@
 import { defineField, defineType } from "sanity";
 import { BiFoodMenu } from "react-icons/Bi";
 
+import { MENU_ITEM_NAME, MenuItem } from "../menu-item";
+
 export const MENU_CATEGORY_NAME = "menuCategory";
 
 export type MenuCategory = {
   _id: string;
   name: string;
   placement: number;
+  menuItems: Pick<
+    MenuItem,
+    "_id" | "name" | "price" | "excerpt" | "slug" | "options"
+  >[];
   availability?: {
     startTime: number;
     endTime: number;
@@ -30,6 +36,21 @@ export const menuCategoryType = defineType({
       title: "orden en el menú",
       type: "number",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "menuItems",
+      title: "menu items",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [
+            {
+              type: MENU_ITEM_NAME,
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: "shouldAddLimitedService",
