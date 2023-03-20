@@ -1,25 +1,29 @@
 import type { MenuItem } from "@/types";
 import { useState, forwardRef } from "react";
+import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import chunk from "lodash.chunk";
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Accordion from "@radix-ui/react-accordion";
-
 import { Box, Button, Icon, Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import { IoChevronDownCircleOutline } from "react-icons/io5";
+
+import { getAllMenuCategories } from "@/sanity/queries";
 import { Layout, Section, Container } from "@/components";
 
-import { mocktailsData, brunchData, sandwichData, dessertsData } from "@/mocks";
+export async function getStaticProps() {
+  const menuCategories = await getAllMenuCategories();
 
-const categories = {
-  cafe: "cafe",
-  mocktails: "mocktails",
-  brunch: "brunch",
-  sandwiches: "sandwiches",
-  desserts: "desserts",
-};
+  return {
+    props: {
+      menuCategories,
+    },
+  };
+}
 
-export default function Menu() {
+type MenuPageProps = InferGetStaticPropsType<typeof getStaticProps>;
+
+export default function Menu({ menuCategories }: MenuPageProps) {
   return (
     <Layout title="Menú | Benúla">
       <Section py={18}>
@@ -30,8 +34,8 @@ export default function Menu() {
           <Text mt={3} fontSize="18px">
             descripción de todo el menú aquí
           </Text>
-          <DesktopMenu />
-          <MobileMenu />
+          <DesktopMenu menuCategories={menuCategories} />
+          <MobileMenu menuCategories={menuCategories} />
         </Container>
       </Section>
     </Layout>
@@ -40,36 +44,40 @@ export default function Menu() {
 
 // ==============================
 // Desktop Menu
-function DesktopMenu() {
-  const [currentValue, setCurrentValue] = useState(categories.mocktails);
+
+type DesktopMenuProps = {
+  menuCategories: MenuPageProps["menuCategories"];
+};
+
+function DesktopMenu({ menuCategories }: DesktopMenuProps) {
+  const [currentValue, setCurrentValue] = useState(
+    () => menuCategories[0].name
+  );
 
   return (
     <Box display={["none", "block"]} mt={[12]}>
       <Tabs.Root value={currentValue} onValueChange={setCurrentValue}>
         <Tabs.List aria-label="menu">
           <Flex alignItems="center">
-            <TabButton value={categories.mocktails} currentValue={currentValue}>
-              mocktails
-            </TabButton>
-            <TabButton value={categories.brunch} currentValue={currentValue}>
-              brunch
-            </TabButton>
-            <TabButton
-              value={categories.sandwiches}
-              currentValue={currentValue}
-            >
-              entre panes
-            </TabButton>
-            <TabButton value={categories.desserts} currentValue={currentValue}>
-              postres
-            </TabButton>
+            {menuCategories.map((category) => (
+              <TabButton
+                key={category._id}
+                value={category.name}
+                currentValue={currentValue}
+              >
+                {category.name}
+              </TabButton>
+            ))}
           </Flex>
         </Tabs.List>
         <Box width="100%" height="2px" backgroundColor="rgba(0, 0, 0, 0.04)" />
-        <TabPanel value={categories.mocktails} menuItems={mocktailsData} />
-        <TabPanel value={categories.brunch} menuItems={brunchData} />
-        <TabPanel value={categories.sandwiches} menuItems={sandwichData} />
-        <TabPanel value={categories.desserts} menuItems={dessertsData} />
+        {menuCategories.map((category) => (
+          <TabPanel
+            key={category._id}
+            value={category.name}
+            menuItems={category.menuItems}
+          />
+        ))}
       </Tabs.Root>
     </Box>
   );
@@ -112,7 +120,7 @@ function TabButton({
 
 type TabPanelProps = {
   value: Tabs.TabsContentProps["value"];
-  menuItems: MenuItem[];
+  menuItems: MenuPageProps["menuCategories"][number]["menuItems"];
 };
 
 function TabPanel({ value, menuItems }: TabPanelProps) {
@@ -138,14 +146,14 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
                 >
                   <Flex alignItems="baseline">
                     <Text fontSize="24px" mr={6}>
-                      ${item.basePrice}
+                      ${item.price}
                     </Text>
                     <Text fontWeight="bold" fontSize="32px">
                       {item.name}
                     </Text>
                   </Flex>
                   <Text fontSize="20px" color="#4D4D4D">
-                    {item.abstract}
+                    {item.excerpt}
                   </Text>
                   {item.options &&
                     item.options.map((option, index) => (
@@ -160,13 +168,13 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
                         </Text>
                       </Text>
                     ))}
-                  {item.detailUrl && (
+                  {item.slug && (
                     <Text
                       textDecoration="underline"
                       mt={2}
                       fontSize={["16px", "20px"]}
                     >
-                      <Link href={`/menu${item.detailUrl}`}>ver más</Link>
+                      <Link href={`/menu${item.slug}`}>ver más</Link>
                     </Text>
                   )}
                 </Box>
@@ -182,35 +190,23 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
 // ==============================
 // Mobile Menu
 
-function MobileMenu() {
+type MobileMenuProps = {
+  menuCategories: MenuPageProps["menuCategories"];
+};
+
+function MobileMenu({ menuCategories }: MobileMenuProps) {
   return (
     <Box display={["block", "none"]} mt={16}>
       <Accordion.Root type="multiple" asChild>
         <Grid rowGap="18px">
-          <Accordion.Item value={categories.mocktails}>
-            <AccordionTrigger value={categories.mocktails}>
-              mocktails
-            </AccordionTrigger>
-            <AccordionContent menuItems={mocktailsData} />
-          </Accordion.Item>
-          <Accordion.Item value={categories.brunch}>
-            <AccordionTrigger value={categories.brunch}>
-              brunch
-            </AccordionTrigger>
-            <AccordionContent menuItems={brunchData} />
-          </Accordion.Item>
-          <Accordion.Item value={categories.sandwiches}>
-            <AccordionTrigger value={categories.sandwiches}>
-              entre panes
-            </AccordionTrigger>
-            <AccordionContent menuItems={sandwichData} />
-          </Accordion.Item>
-          <Accordion.Item value={categories.desserts}>
-            <AccordionTrigger value={categories.desserts}>
-              desserts
-            </AccordionTrigger>
-            <AccordionContent menuItems={dessertsData} />
-          </Accordion.Item>
+          {menuCategories.map((category) => (
+            <Accordion.Item key={category._id} value={category.name}>
+              <AccordionTrigger value={category.name}>
+                {category.name}
+              </AccordionTrigger>
+              <AccordionContent menuItems={category.menuItems} />
+            </Accordion.Item>
+          ))}
         </Grid>
       </Accordion.Root>
     </Box>
@@ -272,7 +268,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
 AccordionTrigger.displayName = "AccordionTrigger";
 
 type AccordionContentProps = {
-  menuItems: MenuItem[];
+  menuItems: MenuPageProps["menuCategories"][number]["menuItems"];
 } & Accordion.AccordionContentProps;
 
 const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
@@ -290,13 +286,13 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
             <Box key={item.name} borderBottom="1px solid #E4E4E4" pt={2} pb={5}>
               <Flex alignItems="baseline">
                 <Text fontSize="18px" mr={3}>
-                  ${item.basePrice}
+                  ${item.price}
                 </Text>
                 <Text fontWeight="bold" fontSize="20px">
                   {item.name}
                 </Text>
               </Flex>
-              <Text mt={6}>{item.abstract}</Text>
+              <Text mt={6}>{item.excerpt}</Text>
               {item.options &&
                 item.options.map((option, index) => (
                   <Text
@@ -311,9 +307,9 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
                     </Text>
                   </Text>
                 ))}
-              {item.detailUrl && (
+              {item.slug && (
                 <Text textDecoration="underline" mt={2}>
-                  <Link href={`/menu${item.detailUrl}`}>ver más</Link>
+                  <Link href={`/menu${item.slug}`}>ver más</Link>
                 </Text>
               )}
             </Box>
