@@ -1,3 +1,4 @@
+import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Box, Flex, Grid, Heading, Icon, Text } from "@chakra-ui/react";
@@ -16,9 +17,24 @@ import waveSvg from "@/public/images/wave.svg";
 import coffeeMethodsImage from "@/public/images/coffee-methods.jpeg";
 import benulasImage from "@/public/images/benulas.jpeg";
 
-import { carouselData, gridData, staffData } from "@/mocks";
+import { getAllStaffMembers } from "@/sanity/queries";
+import { urlForImage } from "@/sanity/utils";
 
-export default function Home() {
+import { carouselData, gridData } from "@/mocks";
+
+export async function getStaticProps() {
+  const staffMembers = await getAllStaffMembers();
+
+  return {
+    props: {
+      staffMembers,
+    },
+  };
+}
+
+type HomePageProps = InferGetStaticPropsType<typeof getStaticProps>;
+
+export default function Home({ staffMembers }: HomePageProps) {
   return (
     <Layout title="Benúla" headerVariant="transparent">
       <Section mt={["-66px", "-90px"]}>
@@ -241,13 +257,12 @@ export default function Home() {
             gridTemplateColumns={["1fr", "repeat(2, 1fr)"]}
             gap={16}
           >
-            {staffData.map((item) => (
-              <Box key={item.id}>
+            {staffMembers.map((member) => (
+              <Box key={member._id}>
                 <Box position="relative" width="100%" height="405px">
                   <Image
-                    src={item.imageSrc}
-                    alt={item.altText}
-                    placeholder="blur"
+                    src={urlForImage(member.image).height(405).url()}
+                    alt={member.image.alt}
                     style={{
                       objectFit: "cover",
                       objectPosition: "center",
@@ -263,7 +278,7 @@ export default function Home() {
                     color="#81191A"
                     textDecor="underline"
                   >
-                    {item.name}
+                    {member.name}
                   </Heading>
                   <Box
                     mt={3}
@@ -274,7 +289,7 @@ export default function Home() {
                     borderRadius="10px"
                   >
                     <Text>
-                      <strong>{item.role}</strong>
+                      <strong>{member.role}</strong>
                     </Text>
                   </Box>
                 </Box>
