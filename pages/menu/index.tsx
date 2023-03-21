@@ -174,7 +174,7 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
                       mt={2}
                       fontSize={["16px", "20px"]}
                     >
-                      <Link href={`/menu${item.slug}`}>ver más</Link>
+                      <Link href={`/menu/${item.slug.current}`}>ver más</Link>
                     </Text>
                   )}
                 </Box>
@@ -309,7 +309,7 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
                 ))}
               {item.slug && (
                 <Text textDecoration="underline" mt={2}>
-                  <Link href={`/menu${item.slug}`}>ver más</Link>
+                  <Link href={`/menu/${item.slug.current}`}>ver más</Link>
                 </Text>
               )}
             </Box>
