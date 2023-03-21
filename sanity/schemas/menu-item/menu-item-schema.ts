@@ -21,6 +21,7 @@ export type MenuItem = {
       _ref: string;
       _type: string;
     };
+    alt: string;
   }[];
   description?: string;
   slug?: {
@@ -110,7 +111,14 @@ export const menuItemType = defineType({
       name: "images",
       title: "imagenes",
       type: "array",
-      of: [{ type: "image" }],
+      of: [
+        {
+          type: "image",
+          fields: [
+            { name: "alt", type: "string", title: "Descripción de la imagen" },
+          ],
+        },
+      ],
     }),
   ],
 });

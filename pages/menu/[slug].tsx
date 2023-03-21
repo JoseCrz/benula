@@ -142,7 +142,7 @@ function ImageGallery({ images }: ImageGalleryProps) {
                   <Image
                     src={urlForImage(image).height(500).fit("clip").url()}
                     fill
-                    alt=""
+                    alt={image.alt}
                     placeholder="blur"
                     blurDataURL={urlForImage(image)
                       .height(500)
@@ -195,7 +195,7 @@ function ImageGallery({ images }: ImageGalleryProps) {
                     <Image
                       src={urlForImage(image).height(96).fit("clip").url()}
                       fill
-                      alt=""
+                      alt={image.alt}
                       placeholder="blur"
                       blurDataURL={urlForImage(image)
                         .height(96)
