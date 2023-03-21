@@ -14,9 +14,19 @@ export type MenuItem = {
     optionDescription: string;
   }[];
   hasDetailPage: boolean;
-  images: string[];
+  images: {
+    _key: string;
+    _type: "image";
+    asset: {
+      _ref: string;
+      _type: string;
+    };
+  }[];
   description?: string;
-  slug?: string;
+  slug?: {
+    _type: "slug";
+    current: string;
+  };
 };
 
 export const menuItemType = defineType({
