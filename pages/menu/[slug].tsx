@@ -1,17 +1,39 @@
 import { useState, useEffect, useCallback } from "react";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Box, Button, Flex, Grid, Heading, Icon, Text } from "@chakra-ui/react";
 import useEmblaCarousel from "embla-carousel-react";
-
-import { Container, Layout, Section } from "@/components";
 import { BiArrowBack } from "react-icons/Bi";
 
-import { dessertsData } from "@/mocks/menuData";
+import { getAllMenuItemSlugs, getMenuItemBySlug } from "@/sanity/queries";
+import { urlForImage } from "@/sanity/utils";
+import { Container, Layout, Section } from "@/components";
 
-const pistacheData = dessertsData[0];
+export async function getStaticPaths() {
+  const slugs = await getAllMenuItemSlugs();
 
-export default function MenuDetail() {
+  return {
+    paths: slugs.map((slug) => `/menu/${slug}`),
+    fallback: false,
+  };
+}
+
+export async function getStaticProps(
+  context: GetStaticPropsContext<{ slug: string }>
+) {
+  const menuItem = await getMenuItemBySlug(context.params?.slug || "");
+
+  return {
+    props: {
+      menuItem,
+    },
+  };
+}
+
+type MenuDetailPageProps = InferGetStaticPropsType<typeof getStaticProps>;
+
+export default function MenuDetail({ menuItem }: MenuDetailPageProps) {
   return (
     <Layout title="Espiral de Pistache | Benúla">
       <Section backgroundColor="#FAFAFA">
@@ -31,11 +53,11 @@ export default function MenuDetail() {
           >
             <Box pr={[0, 10]}>
               <Heading as="h1" fontSize={["42px", "60px"]} color="#81191A">
-                espiral de pistache
+                {menuItem.name}
               </Heading>
               <Flex alignItems="center" mt={[6]}>
                 <Text fontSize={["24px"]} color="#81191A" fontWeight="bold">
-                  $55
+                  ${menuItem.price}
                 </Text>
                 <Box width="1px" height="40px" backgroundColor="black" mx={4} />
                 <Text
@@ -61,26 +83,11 @@ export default function MenuDetail() {
                 py={[6]}
                 px={[4]}
               >
-                <Text fontSize={["20px"]}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros elementum tristique. Duis
-                  cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                  commodo diam libero vitae erat. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit. Suspendisse varius enim in eros
-                  elementum tristique. Duis cursus, mi quis viverra ornare, eros
-                  dolor interdum nulla, ut commodo diam libero vitae erat.Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                  varius enim in eros elementum tristique. Duis cursus, mi quis
-                  viverra ornare, eros dolor interdum nulla, ut commodo diam
-                  libero vitae erat. Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Suspendisse varius enim in eros elementum
-                  tristique. Duis cursus, mi quis viverra ornare, eros dolor
-                  interdum nulla, ut commodo diam libero vitae erat.
-                </Text>
+                <Text fontSize={["20px"]}>{menuItem.description}</Text>
               </Box>
             </Box>
             <Box>
-              <ImageGallery />
+              <ImageGallery images={menuItem.images} />
             </Box>
           </Grid>
         </Container>
@@ -89,7 +96,11 @@ export default function MenuDetail() {
   );
 }
 
-function ImageGallery() {
+type ImageGalleryProps = {
+  images: MenuDetailPageProps["menuItem"]["images"];
+};
+
+function ImageGallery({ images }: ImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel();
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
@@ -119,9 +130,9 @@ function ImageGallery() {
     <>
       <Box ref={emblaMainRef} overflow="hidden">
         <Flex flexDirection="row" height="auto">
-          {pistacheData.pictures?.map((picture, index) => (
+          {images.map((image, index) => (
             <Flex
-              key={`${pistacheData.name}-picture-${index}`}
+              key={image._key}
               flex="0 0 100%"
               minWidth={0}
               position="relative"
@@ -129,10 +140,16 @@ function ImageGallery() {
               <Box position="relative" width="100%">
                 <Box height="500px">
                   <Image
-                    src={picture.pictureSrc}
-                    alt={picture.pictureAlt}
+                    src={urlForImage(image).height(500).fit("clip").url()}
                     fill
+                    alt=""
                     placeholder="blur"
+                    blurDataURL={urlForImage(image)
+                      .height(500)
+                      .quality(10)
+                      .blur(1000)
+                      .fit("clip")
+                      .url()}
                     style={{
                       objectFit: "cover",
                       objectPosition: "center",
@@ -147,9 +164,9 @@ function ImageGallery() {
       </Box>
       <Box ref={emblaThumbsRef} mt={4} overflow="hidden">
         <Flex flexDirection="row">
-          {pistacheData.pictures?.map((picture, index) => (
+          {images.map((image, index) => (
             <Box
-              key={`${pistacheData.name}-picture-${index}`}
+              key={image._key}
               flex="0 0 25%"
               minWidth={0}
               position="relative"
@@ -176,10 +193,15 @@ function ImageGallery() {
                 <Box position="relative" width="100%">
                   <Box height="96px">
                     <Image
-                      src={picture.pictureSrc}
-                      alt={picture.pictureAlt}
+                      src={urlForImage(image).height(96).fit("clip").url()}
                       fill
+                      alt=""
                       placeholder="blur"
+                      blurDataURL={urlForImage(image)
+                        .height(96)
+                        .quality(10)
+                        .blur(1000)
+                        .url()}
                       style={{
                         objectFit: "cover",
                         objectPosition: "center",
