@@ -2,6 +2,7 @@ import { defineType, defineField } from "sanity";
 import { BsFillPersonBadgeFill } from "react-icons/bs";
 
 export type StaffMember = {
+  _id: string;
   name: string;
   role: string;
   image: {
