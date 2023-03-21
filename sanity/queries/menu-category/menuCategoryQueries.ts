@@ -1,9 +1,9 @@
 import { groq } from "next-sanity";
-import { sanityClient } from "@/sanity/client/sanityClient";
+import { sanityClient } from "@/sanity/client";
 
 import { MENU_CATEGORY_NAME, type MenuCategory } from "@/sanity/schemas";
 
-export const allMenuCategoriesQuery = groq`
+const allMenuCategoriesQuery = groq`
 *[_type == "${MENU_CATEGORY_NAME}"] | order(placement asc) {
   _id, 
   name,
