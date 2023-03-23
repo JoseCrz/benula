@@ -3,6 +3,7 @@ import { deskTool } from "sanity/desk";
 
 import { SANITY_PROJECT_ID, SANITY_DATASET } from "./sanity/data";
 import {
+  dessertType,
   menuCategoryType,
   menuItemType,
   staffMemberType,
@@ -14,7 +15,7 @@ export default defineConfig({
   dataset: SANITY_DATASET,
   title: "Benúla",
   schema: {
-    types: [menuCategoryType, menuItemType, staffMemberType],
+    types: [menuCategoryType, menuItemType, staffMemberType, dessertType],
   },
   plugins: [deskTool()],
 });
