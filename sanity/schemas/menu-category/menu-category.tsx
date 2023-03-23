@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { BiFoodMenu } from "react-icons/Bi";
+import { BiFoodMenu } from "react-icons/bi";
 
 import { MENU_ITEM_NAME, MenuItem } from "../menu-item";
 

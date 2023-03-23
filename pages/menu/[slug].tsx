@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Box, Button, Flex, Grid, Heading, Icon, Text } from "@chakra-ui/react";
 import useEmblaCarousel from "embla-carousel-react";
-import { BiArrowBack } from "react-icons/Bi";
+import { BiArrowBack } from "react-icons/bi";
 
 import { getAllMenuItemSlugs, getMenuItemBySlug } from "@/sanity/queries";
 import { urlForImage } from "@/sanity/utils";
