@@ -12,29 +12,30 @@ import {
   Layout,
 } from "@/components";
 
-import nubeImage from "@/public/images/nube.jpeg";
 import waveSvg from "@/public/images/wave.svg";
 import coffeeMethodsImage from "@/public/images/coffee-methods.jpeg";
 import benulasImage from "@/public/images/benulas.jpeg";
 
-import { getAllStaffMembers } from "@/sanity/queries";
+import { getLatestDessert, getAllStaffMembers } from "@/sanity/queries";
 import { urlForImage } from "@/sanity/utils";
 
 import { carouselData, gridData } from "@/mocks";
 
 export async function getStaticProps() {
   const staffMembers = await getAllStaffMembers();
+  const latestDessert = await getLatestDessert();
 
   return {
     props: {
       staffMembers,
+      latestDessert,
     },
   };
 }
 
 type HomePageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-export default function Home({ staffMembers }: HomePageProps) {
+export default function Home({ staffMembers, latestDessert }: HomePageProps) {
   return (
     <Layout title="Benúla" headerVariant="transparent">
       <Section mt={["-66px", "-90px"]}>
@@ -45,10 +46,9 @@ export default function Home({ staffMembers }: HomePageProps) {
           minHeight={["100vh", "auto"]}
         >
           <Image
-            src={nubeImage}
-            alt="Nube de Guayaba"
+            src={urlForImage(latestDessert.coverImage.asset).height(865).url()}
+            alt={latestDessert.coverImage.alt}
             priority
-            placeholder="blur"
             style={{
               objectFit: "cover",
               objectPosition: "center",
@@ -63,20 +63,21 @@ export default function Home({ staffMembers }: HomePageProps) {
           >
             <Container>
               <Heading as="h1" fontSize={["42px", "56px"]} color="white">
-                Nombre del postre del mes
+                {latestDessert.name}
               </Heading>
               <Text color="white" mt={6} fontSize={["16px", "xl"]}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros elementum tristique. Duis
-                cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                commodo diam libero vitae erat.
+                {latestDessert.excerpt}
               </Text>
               <Box display={["block", "flex"]} mt={10}>
                 <Box mr={[0, 4]}>
-                  <ButtonLink href="/">ver más</ButtonLink>
+                  <ButtonLink
+                    href={`/postre-del-mes/${latestDessert.slug.current}`}
+                  >
+                    ver más
+                  </ButtonLink>
                 </Box>
                 <Box mt={[4, 0]}>
-                  <ButtonLink href="/" variant="transparent">
+                  <ButtonLink href="/postre-del-mes" variant="transparent">
                     conoce todos los postres
                   </ButtonLink>
                 </Box>
