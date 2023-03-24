@@ -1,5 +1,5 @@
 export * from "./Button";
-export * from "./Carousel";
+export * from "./DessertsCarousel";
 export * from "./Container";
 export * from "./Footer";
 export * from "./Header";
