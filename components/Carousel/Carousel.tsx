@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import Image, { type ImageProps } from "next/image";
+import Image from "next/image";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ButtonLink } from "@/components";
+
+import type { Dessert } from "@/sanity/schemas";
+import { urlForImage } from "@/sanity/utils";
 
 type CarouselProps = { children: React.ReactNode };
 
@@ -54,21 +57,19 @@ export function Carousel({ children }: CarouselProps) {
 // Children Components
 
 type SlideProps = {
-  imageSrc: ImageProps["src"];
-  altText: string;
   name: string;
-  author: string;
-  month: string;
+  collaborator: Dessert["collaborator"];
+  coverImage: Dessert["coverImage"];
+  date: Dessert["date"];
   seeMoreUrl: string;
   seeAllUrl: string;
 };
 
 Carousel.Slide = function Slide({
-  imageSrc,
-  altText,
   name,
-  author,
-  month,
+  collaborator,
+  coverImage,
+  date,
   seeMoreUrl,
   seeAllUrl,
 }: SlideProps) {
@@ -82,9 +83,8 @@ Carousel.Slide = function Slide({
       <Box position="relative">
         <Box height={[600]}>
           <Image
-            src={imageSrc}
-            alt={altText}
-            placeholder="blur"
+            src={urlForImage(coverImage.asset).height(600).url()}
+            alt={coverImage.alt}
             style={{
               objectFit: "cover",
               objectPosition: "center",
@@ -117,10 +117,10 @@ Carousel.Slide = function Slide({
                 fontSize="24px"
                 fontWeight={400}
               >
-                {author}
+                {collaborator}
               </Text>
               <Text fontSize="20px" color="white">
-                postre de {month}
+                postre de {getDateString(date)}
               </Text>
             </Box>
             <Box>
@@ -141,3 +141,25 @@ Carousel.Slide = function Slide({
     </Box>
   );
 };
+
+const months: Record<number, string> = {
+  0: "enero",
+  1: "febrero",
+  2: "marzo",
+  3: "abril",
+  4: "mayo",
+  5: "junio",
+  6: "julio",
+  7: "agosto",
+  8: "septiembre",
+  9: "octubre",
+  10: "noviembre",
+  11: "diciembre",
+};
+
+function getDateString(date: string) {
+  const currentDate = new Date(date);
+  const currentMonth = currentDate.getUTCMonth();
+  const currentYear = currentDate.getUTCFullYear();
+  return `${months[currentMonth]} del ${currentYear}`;
+}
