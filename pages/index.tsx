@@ -5,7 +5,7 @@ import { Box, Flex, Grid, Heading, Icon, Text } from "@chakra-ui/react";
 import { FaChevronRight } from "react-icons/fa";
 import {
   ButtonLink,
-  Carousel,
+  DessertsCarousel,
   Container,
   Highlight,
   Section,
@@ -16,26 +16,27 @@ import waveSvg from "@/public/images/wave.svg";
 import coffeeMethodsImage from "@/public/images/coffee-methods.jpeg";
 import benulasImage from "@/public/images/benulas.jpeg";
 
-import { getLatestDessert, getAllStaffMembers } from "@/sanity/queries";
+import { getLatestDesserts, getAllStaffMembers } from "@/sanity/queries";
 import { urlForImage } from "@/sanity/utils";
 
-import { carouselData, gridData } from "@/mocks";
+import { gridData } from "@/mocks";
 
 export async function getStaticProps() {
   const staffMembers = await getAllStaffMembers();
-  const latestDessert = await getLatestDessert();
+  const latestDesserts = await getLatestDesserts();
 
   return {
     props: {
       staffMembers,
-      latestDessert,
+      latestDesserts,
     },
   };
 }
 
 type HomePageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-export default function Home({ staffMembers, latestDessert }: HomePageProps) {
+export default function Home({ staffMembers, latestDesserts }: HomePageProps) {
+  const [firstDessert, ...restOfDesserts] = latestDesserts;
   return (
     <Layout title="Benúla" headerVariant="transparent">
       <Section mt={["-66px", "-90px"]}>
@@ -46,8 +47,8 @@ export default function Home({ staffMembers, latestDessert }: HomePageProps) {
           minHeight={["100vh", "auto"]}
         >
           <Image
-            src={urlForImage(latestDessert.coverImage.asset).height(865).url()}
-            alt={latestDessert.coverImage.alt}
+            src={urlForImage(firstDessert.coverImage.asset).height(865).url()}
+            alt={firstDessert.coverImage.alt}
             priority
             style={{
               objectFit: "cover",
@@ -63,15 +64,15 @@ export default function Home({ staffMembers, latestDessert }: HomePageProps) {
           >
             <Container>
               <Heading as="h1" fontSize={["42px", "56px"]} color="white">
-                {latestDessert.name}
+                {firstDessert.name}
               </Heading>
               <Text color="white" mt={6} fontSize={["16px", "xl"]}>
-                {latestDessert.excerpt}
+                {firstDessert.excerpt}
               </Text>
               <Box display={["block", "flex"]} mt={10}>
                 <Box mr={[0, 4]}>
                   <ButtonLink
-                    href={`/postre-del-mes/${latestDessert.slug.current}`}
+                    href={`/postre-del-mes/${firstDessert.slug.current}`}
                   >
                     ver más
                   </ButtonLink>
@@ -128,20 +129,7 @@ export default function Home({ staffMembers, latestDessert }: HomePageProps) {
         </Box>
       </Section>
       <Section backgroundColor="#FAFAFA" pb={12}>
-        <Carousel>
-          {carouselData.map((item) => (
-            <Carousel.Slide
-              key={item.id}
-              name={item.name}
-              author={item.author}
-              month={item.month}
-              imageSrc={item.image}
-              altText={item.altText}
-              seeMoreUrl={item.seeMoreUrl}
-              seeAllUrl={item.seeAllUrl}
-            />
-          ))}
-        </Carousel>
+        <DessertsCarousel desserts={restOfDesserts} />
       </Section>
       <Section
         py={24}
