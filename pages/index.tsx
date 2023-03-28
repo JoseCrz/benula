@@ -16,26 +16,37 @@ import waveSvg from "@/public/images/wave.svg";
 import coffeeMethodsImage from "@/public/images/coffee-methods.jpeg";
 import benulasImage from "@/public/images/benulas.jpeg";
 
-import { getLatestDesserts, getAllStaffMembers } from "@/sanity/queries";
+import {
+  getLatestDesserts,
+  getAllStaffMembers,
+  getLatestMenuItemsWithDetail,
+} from "@/sanity/queries";
 import { urlForImage } from "@/sanity/utils";
 
-import { gridData } from "@/mocks";
-
 export async function getStaticProps() {
-  const staffMembers = await getAllStaffMembers();
-  const latestDesserts = await getLatestDesserts();
+  const [latestDesserts, latestMenuItemsWithDetail, staffMembers] =
+    await Promise.all([
+      getLatestDesserts(),
+      getLatestMenuItemsWithDetail(),
+      getAllStaffMembers(),
+    ]);
 
   return {
     props: {
       staffMembers,
       latestDesserts,
+      latestMenuItemsWithDetail,
     },
   };
 }
 
 type HomePageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-export default function Home({ staffMembers, latestDesserts }: HomePageProps) {
+export default function Home({
+  staffMembers,
+  latestDesserts,
+  latestMenuItemsWithDetail,
+}: HomePageProps) {
   const [firstDessert, ...restOfDesserts] = latestDesserts;
   return (
     <Layout title="Benúla" headerVariant="transparent">
@@ -155,38 +166,44 @@ export default function Home({ staffMembers, latestDesserts }: HomePageProps) {
             gridTemplateColumns={["1fr", "repeat(3, 1fr)"]}
             gap={12}
           >
-            {gridData.map((item) => (
-              <Box key={item.id}>
-                <Box
-                  position="relative"
-                  width="100%"
-                  maxWidth="405px"
-                  height="240px"
-                >
-                  <Image
-                    src={item.imageSrc}
-                    alt={item.altText}
-                    placeholder="blur"
-                    style={{
-                      objectFit: "cover",
-                      objectPosition: "center",
-                    }}
-                    fill
-                  />
+            {latestMenuItemsWithDetail.map((menuItem) => {
+              console.log(`${menuItem.name}`, menuItem.images);
+
+              return (
+                <Box key={menuItem._id}>
+                  <Box
+                    position="relative"
+                    width="100%"
+                    maxWidth="405px"
+                    height="240px"
+                  >
+                    <Image
+                      src={urlForImage(menuItem.images[0].asset)
+                        .height(240)
+                        .width(405)
+                        .url()}
+                      alt={menuItem.images[0].alt}
+                      style={{
+                        objectFit: "cover",
+                        objectPosition: "center",
+                      }}
+                      fill
+                    />
+                  </Box>
+                  <Heading as="h3" mt={8} fontSize="24px">
+                    {menuItem.name}
+                  </Heading>
+                  <Text mt={4} mb={8}>
+                    {menuItem.excerpt}
+                  </Text>
+                  <Link href={`/menu/${menuItem.slug?.current}`}>
+                    <Flex alignItems="center">
+                      ver más <Icon as={FaChevronRight} ml={2} />
+                    </Flex>
+                  </Link>
                 </Box>
-                <Heading as="h3" mt={8} fontSize="24px">
-                  {item.title}
-                </Heading>
-                <Text mt={4} mb={8}>
-                  {item.text}
-                </Text>
-                <Link href={item.seeMoreUrl}>
-                  <Flex alignItems="center">
-                    ver más <Icon as={FaChevronRight} ml={2} />
-                  </Flex>
-                </Link>
-              </Box>
-            ))}
+              );
+            })}
           </Grid>
         </Container>
       </Section>
