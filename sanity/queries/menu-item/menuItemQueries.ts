@@ -1,5 +1,5 @@
 import { groq } from "next-sanity";
-import type { MenuItem } from "@/sanity/schemas";
+import { menuCategoryType, type MenuItem } from "@/sanity/schemas";
 import { sanityClient } from "@/sanity/client/sanityClient";
 
 const menuItemSlugsQuery = groq`
@@ -20,4 +20,14 @@ export async function getMenuItemBySlug(slug: string): Promise<MenuItem> {
   if (!sanityClient) return {} as any;
 
   return await sanityClient.fetch(menuItemBySlugQuery, { slug });
+}
+
+const latestMenuItemsWithDetailPageQuery = groq`
+*[_type == "menuItem" && defined(slug.current)][0...6] | order(_updatedAt desc)
+`;
+
+export async function getLatestMenuItemsWithDetail(): Promise<MenuItem[]> {
+  if (!sanityClient) return [];
+
+  return (await sanityClient.fetch(latestMenuItemsWithDetailPageQuery)) || [];
 }
