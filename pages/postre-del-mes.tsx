@@ -1,11 +1,38 @@
+import { useState } from "react";
 import Image from "next/image";
+import type { InferGetStaticPropsType } from "next";
 import { Box, Button, Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import { ButtonLink, Container, Layout, Section } from "@/components";
 
-import nubeImage from "@/public/images/mocks/nube.jpeg";
-import { gridData } from "@/mocks";
+import { getDateString, urlForImage } from "@/sanity/utils";
+import { getAllDeserts } from "@/sanity/queries";
 
-export default function DesertOfTheMonth() {
+const DESSERTS_PER_PAGE = 4;
+
+export async function getStaticProps() {
+  const allDesserts = await getAllDeserts();
+  return {
+    props: {
+      allDesserts,
+    },
+  };
+}
+
+type DessertOfTheMonthPageProps = InferGetStaticPropsType<
+  typeof getStaticProps
+>;
+
+export default function DesertOfTheMonth({
+  allDesserts,
+}: DessertOfTheMonthPageProps) {
+  const [firstDessert, ...restOfDesserts] = allDesserts;
+
+  const [visibleAmount, setVisibleAmount] = useState(DESSERTS_PER_PAGE);
+
+  const visibileDesserts = restOfDesserts.slice(0, visibleAmount);
+
+  const hasMoreDesserts = restOfDesserts.length > visibleAmount;
+
   return (
     <Layout title="Postre del mes | Benúla">
       <Section pt={[16, 18]} pb={[16, 12]}>
@@ -27,8 +54,11 @@ export default function DesertOfTheMonth() {
               height={["320px", "510px"]}
             >
               <Image
-                src={nubeImage}
-                alt="nube de guayaba"
+                src={urlForImage(firstDessert.coverImage.asset)
+                  .width(656)
+                  .height(510)
+                  .url()}
+                alt={firstDessert.coverImage.alt}
                 style={{
                   objectFit: "cover",
                   objectPosition: "center",
@@ -39,18 +69,19 @@ export default function DesertOfTheMonth() {
             </Box>
             <Box mt={[10, 0]} ml={[0, 12]} maxWidth={["100%", "411px"]}>
               <Text fontSize="14px">
-                <strong>chef victor mendoza</strong>
+                <strong>{getDateString(firstDessert.date)}</strong>
               </Text>
               <Heading as="h2" fontSize="32px" mt={2}>
-                nube de pistache
+                {firstDessert.name}
               </Heading>
-              <Text mt={2}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros.
-              </Text>
+              <Text mt={2}>{firstDessert.excerpt}</Text>
               <Box display={["block", "flex"]} mt={[4, 6]}>
                 <Box mr={[0, 6]}>
-                  <ButtonLink href="/">ver más</ButtonLink>
+                  <ButtonLink
+                    href={`/postre-del-mes/${firstDessert.slug.current}`}
+                  >
+                    ver más
+                  </ButtonLink>
                 </Box>
                 <Box mt={[4, 0]}>
                   <ButtonLink href="/" variant="black">
@@ -69,37 +100,51 @@ export default function DesertOfTheMonth() {
             columnGap={12}
             rowGap="61px"
           >
-            {gridData.map((item) => (
+            {visibileDesserts.map((dessert) => (
               <Box
-                key={item.id}
+                key={dessert._id}
                 borderBottom={["1px solid #DADADA", "none"]}
                 pb={[10, 0]}
               >
                 <Box position="relative" width="100%" height="300px">
                   <Image
-                    src={item.imageSrc}
-                    alt={item.altText}
-                    placeholder="blur"
+                    src={urlForImage(dessert.coverImage.asset)
+                      .height(300)
+                      .url()}
+                    alt={dessert.coverImage.alt}
                     style={{ objectFit: "cover", objectPosition: "center" }}
                     fill
                   />
                 </Box>
                 <Text mt={6} fontSize="14px" fontWeight="bold">
-                  {item.date}
+                  {getDateString(dessert.date)}
                 </Text>
                 <Heading as="h3" mt={2} fontSize="24px">
-                  {item.title}
+                  {dessert.name}
                 </Heading>
-                <Text mt={2}>{item.text}</Text>
+                <Text mt={2}>{dessert.excerpt}</Text>
                 <Box mt={6}>
-                  <ButtonLink href={item.seeMoreUrl}>ver más</ButtonLink>
+                  <ButtonLink href={`/postre-del-mes/${dessert.slug.current}`}>
+                    ver más
+                  </ButtonLink>
                 </Box>
               </Box>
             ))}
           </Grid>
-          <Flex justifyContent="center" mt={20}>
-            <Button backgroundColor="transparent">cargar más...</Button>
-          </Flex>
+          {hasMoreDesserts && (
+            <Flex justifyContent="center" mt={20}>
+              <Button
+                backgroundColor="transparent"
+                onClick={() =>
+                  setVisibleAmount(
+                    (prevAmount) => prevAmount + DESSERTS_PER_PAGE
+                  )
+                }
+              >
+                cargar más...
+              </Button>
+            </Flex>
+          )}
         </Container>
       </Section>
     </Layout>
