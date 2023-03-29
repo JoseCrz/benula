@@ -12,3 +12,13 @@ export async function getLatestDesserts(): Promise<Dessert[]> {
 
   return await sanityClient.fetch(latestDessertsQuery);
 }
+
+const getAllDessertsQuery = groq`
+  *[_type == "${dessertType.name}"] | order(date desc)
+`;
+
+export async function getAllDeserts(): Promise<Dessert[]> {
+  if (!sanityClient) return [];
+
+  return (await sanityClient.fetch(getAllDessertsQuery)) || [];
+}
