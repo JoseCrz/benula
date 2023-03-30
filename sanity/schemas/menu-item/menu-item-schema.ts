@@ -5,6 +5,7 @@ export const MENU_ITEM_NAME = "menuItem";
 
 export type MenuItem = {
   _id: string;
+  _type: "menuItem";
   name: string;
   price: number;
   excerpt: string;
