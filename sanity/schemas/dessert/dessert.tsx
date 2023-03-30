@@ -4,6 +4,7 @@ import { BiImageAdd } from "react-icons/bi";
 
 export type Dessert = {
   _id: string;
+  _type: "dessert";
   coverImage: {
     _key: string;
     _type: "image";
