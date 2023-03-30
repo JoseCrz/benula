@@ -16,9 +16,95 @@ import {
   type ContainerProps,
 } from "@/components";
 
+import { FeaturedSection } from "@/sections";
+
 import { DessertBlogImage } from "@/sanity/schemas";
 import { urlForImage } from "@/sanity/utils";
-import { getAllDessertSlugs, getDessertBySlug } from "@/sanity/queries";
+import {
+  getAllDessertSlugs,
+  getDessertBySlug,
+  getLatestDesserts,
+} from "@/sanity/queries";
+
+export async function getStaticPaths() {
+  const slugs = await getAllDessertSlugs();
+
+  return {
+    paths: slugs.map((slug) => `/postre-del-mes/${slug}`),
+    fallback: false,
+  };
+}
+
+export async function getStaticProps(
+  context: GetStaticPropsContext<{ slug: string }>
+) {
+  const dessert = await getDessertBySlug(context.params?.slug || "");
+  const latestDesserts = await getLatestDesserts(3);
+
+  return {
+    props: {
+      dessert,
+      latestDesserts,
+    },
+  };
+}
+
+type DessertDetailPageProps = InferGetStaticPropsType<typeof getStaticProps>;
+
+export default function DessertDetail({
+  dessert,
+  latestDesserts,
+}: DessertDetailPageProps) {
+  return (
+    <Layout title={`${dessert.name} | Benúla`}>
+      <Section>
+        <BlogContainer>
+          <Heading as="h1" fontSize="42px">
+            {dessert.name}
+          </Heading>
+        </BlogContainer>
+        <Container mt={["60px"]}>
+          <Box position="relative" width="100%" height="600px">
+            <Image
+              src={urlForImage(dessert.coverImage.asset).height(600).url()}
+              alt={dessert.coverImage.alt}
+              style={{
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
+              priority
+              fill
+            />
+          </Box>
+        </Container>
+      </Section>
+      <Section>
+        <BlogContainer>
+          <article>
+            <PortableText
+              value={dessert.blogPost}
+              components={portableTextComponents}
+            />
+          </article>
+          <Box
+            width="100%"
+            height="1px"
+            my={[12]}
+            backgroundColor="rgba(0, 0, 0, 0.1)"
+          />
+        </BlogContainer>
+      </Section>
+      <FeaturedSection gridItems={latestDesserts} />
+    </Layout>
+  );
+}
+
+function BlogContainer(props: ContainerProps) {
+  return <Container maxWidth="768px" mx="auto" {...props} />;
+}
+
+//=========================
+// Portable Text Components
 
 const portableTextComponents: PortableTextProps["components"] = {
   block: {
@@ -78,74 +164,6 @@ const portableTextComponents: PortableTextProps["components"] = {
     image: PortableImage,
   },
 };
-
-export async function getStaticPaths() {
-  const slugs = await getAllDessertSlugs();
-
-  return {
-    paths: slugs.map((slug) => `/postre-del-mes/${slug}`),
-    fallback: false,
-  };
-}
-
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ slug: string }>
-) {
-  const dessert = await getDessertBySlug(context.params?.slug || "");
-
-  return {
-    props: {
-      dessert,
-    },
-  };
-}
-
-type DessertDetailPageProps = InferGetStaticPropsType<typeof getStaticProps>;
-
-export default function DessertDetail({ dessert }: DessertDetailPageProps) {
-  return (
-    <Layout title={`${dessert.name} | Benúla`}>
-      <Section>
-        <BlogContainer>
-          <Heading as="h1" fontSize="42px">
-            {dessert.name}
-          </Heading>
-        </BlogContainer>
-        <Container mt={["60px"]}>
-          <Box position="relative" width="100%" height="600px">
-            <Image
-              src={urlForImage(dessert.coverImage.asset).height(600).url()}
-              alt={dessert.coverImage.alt}
-              style={{
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
-              priority
-              fill
-            />
-          </Box>
-        </Container>
-      </Section>
-      <Section>
-        <BlogContainer>
-          <article>
-            <PortableText
-              value={dessert.blogPost}
-              components={portableTextComponents}
-            />
-          </article>
-        </BlogContainer>
-      </Section>
-    </Layout>
-  );
-}
-
-function BlogContainer(props: ContainerProps) {
-  return <Container maxWidth="768px" mx="auto" {...props} />;
-}
-
-//=========================
-// Portable Text Components
 
 function PortableImage({
   value: image,
