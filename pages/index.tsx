@@ -1,8 +1,7 @@
 import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Box, Flex, Grid, Heading, Icon, Text } from "@chakra-ui/react";
-import { FaChevronRight } from "react-icons/fa";
+import { Box, Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import {
   ButtonLink,
   DessertsCarousel,
@@ -11,6 +10,7 @@ import {
   Section,
   Layout,
 } from "@/components";
+import { FeaturedSection } from "@/sections";
 
 import waveSvg from "@/public/images/wave.svg";
 import coffeeMethodsImage from "@/public/images/coffee-methods.jpeg";
@@ -47,6 +47,7 @@ export default function Home({
   latestDesserts,
   latestMenuItemsWithDetail,
 }: HomePageProps) {
+  console.log("🚀 ~ latestMenuItemsWithDetail:", latestMenuItemsWithDetail);
   const [firstDessert, ...restOfDesserts] = latestDesserts;
   return (
     <Layout title="Benúla" headerVariant="transparent">
@@ -142,67 +143,7 @@ export default function Home({
       <Section backgroundColor="#FAFAFA" pb={12}>
         <DessertsCarousel desserts={restOfDesserts} />
       </Section>
-      <Section
-        py={24}
-        background="linear-gradient(to bottom, #FAFAFA, #E4D4C4)"
-      >
-        <Container>
-          <Flex
-            flexDirection={["column", "row"]}
-            justifyContent="space-between"
-          >
-            <Heading as="h2" fontSize="42px">
-              café <Highlight>bello</Highlight>, postres{" "}
-              <Highlight>bellos</Highlight>
-            </Heading>
-            <Text mt={[4, 0]} maxWidth={["100%", "565px"]}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse varius enim in eros elementum tristique. Duis cursus,
-              mi quis viverra ornare, eros dolor interdum nulla.
-            </Text>
-          </Flex>
-          <Grid
-            mt={[10, 20]}
-            gridTemplateColumns={["1fr", "repeat(3, 1fr)"]}
-            gap={12}
-          >
-            {latestMenuItemsWithDetail.map((menuItem) => (
-              <Box key={menuItem._id}>
-                <Box
-                  position="relative"
-                  width="100%"
-                  maxWidth="405px"
-                  height="240px"
-                >
-                  <Image
-                    src={urlForImage(menuItem.images[0].asset)
-                      .height(240)
-                      .width(405)
-                      .url()}
-                    alt={menuItem.images[0].alt}
-                    style={{
-                      objectFit: "cover",
-                      objectPosition: "center",
-                    }}
-                    fill
-                  />
-                </Box>
-                <Heading as="h3" mt={8} fontSize="24px">
-                  {menuItem.name}
-                </Heading>
-                <Text mt={4} mb={8}>
-                  {menuItem.excerpt}
-                </Text>
-                <Link href={`/menu/${menuItem.slug?.current}`}>
-                  <Flex alignItems="center">
-                    ver más <Icon as={FaChevronRight} ml={2} />
-                  </Flex>
-                </Link>
-              </Box>
-            ))}
-          </Grid>
-        </Container>
-      </Section>
+      <FeaturedSection gridItems={latestMenuItemsWithDetail} />
       <Section position="relative" width="100%" height={["607px", "378px"]}>
         <Image
           src={coffeeMethodsImage}
