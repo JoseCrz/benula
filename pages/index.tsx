@@ -166,44 +166,40 @@ export default function Home({
             gridTemplateColumns={["1fr", "repeat(3, 1fr)"]}
             gap={12}
           >
-            {latestMenuItemsWithDetail.map((menuItem) => {
-              console.log(`${menuItem.name}`, menuItem.images);
-
-              return (
-                <Box key={menuItem._id}>
-                  <Box
-                    position="relative"
-                    width="100%"
-                    maxWidth="405px"
-                    height="240px"
-                  >
-                    <Image
-                      src={urlForImage(menuItem.images[0].asset)
-                        .height(240)
-                        .width(405)
-                        .url()}
-                      alt={menuItem.images[0].alt}
-                      style={{
-                        objectFit: "cover",
-                        objectPosition: "center",
-                      }}
-                      fill
-                    />
-                  </Box>
-                  <Heading as="h3" mt={8} fontSize="24px">
-                    {menuItem.name}
-                  </Heading>
-                  <Text mt={4} mb={8}>
-                    {menuItem.excerpt}
-                  </Text>
-                  <Link href={`/menu/${menuItem.slug?.current}`}>
-                    <Flex alignItems="center">
-                      ver más <Icon as={FaChevronRight} ml={2} />
-                    </Flex>
-                  </Link>
+            {latestMenuItemsWithDetail.map((menuItem) => (
+              <Box key={menuItem._id}>
+                <Box
+                  position="relative"
+                  width="100%"
+                  maxWidth="405px"
+                  height="240px"
+                >
+                  <Image
+                    src={urlForImage(menuItem.images[0].asset)
+                      .height(240)
+                      .width(405)
+                      .url()}
+                    alt={menuItem.images[0].alt}
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "center",
+                    }}
+                    fill
+                  />
                 </Box>
-              );
-            })}
+                <Heading as="h3" mt={8} fontSize="24px">
+                  {menuItem.name}
+                </Heading>
+                <Text mt={4} mb={8}>
+                  {menuItem.excerpt}
+                </Text>
+                <Link href={`/menu/${menuItem.slug?.current}`}>
+                  <Flex alignItems="center">
+                    ver más <Icon as={FaChevronRight} ml={2} />
+                  </Flex>
+                </Link>
+              </Box>
+            ))}
           </Grid>
         </Container>
       </Section>
