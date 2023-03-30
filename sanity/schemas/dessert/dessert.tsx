@@ -22,6 +22,18 @@ export type Dessert = {
   collaborator: string;
   date: string;
   excerpt: string;
+  blogPost: any;
+};
+
+export type DessertBlogImage = {
+  _key: string;
+  _type: "image";
+  alt?: string;
+  caption?: string;
+  asset: {
+    _ref: string;
+    _type: string;
+  };
 };
 
 export const dessertType = defineType({
@@ -93,6 +105,18 @@ export const dessertType = defineType({
           type: "image",
           name: "image",
           title: "agregar imagen",
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "descripción de la imagen",
+            },
+            {
+              name: "caption",
+              type: "string",
+              title: "pie de foto",
+            },
+          ],
           icon: BiImageAdd,
         },
       ],
