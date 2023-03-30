@@ -47,7 +47,6 @@ export default function Home({
   latestDesserts,
   latestMenuItemsWithDetail,
 }: HomePageProps) {
-  console.log("🚀 ~ latestMenuItemsWithDetail:", latestMenuItemsWithDetail);
   const [firstDessert, ...restOfDesserts] = latestDesserts;
   return (
     <Layout title="Benúla" headerVariant="transparent">
