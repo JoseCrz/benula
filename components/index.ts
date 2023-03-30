@@ -5,4 +5,5 @@ export * from "./Footer";
 export * from "./Header";
 export * from "./Highlight";
 export * from "./Layout";
+export * from "./LocalLink";
 export * from "./Section";

@@ -1,5 +1,4 @@
-import NextLink, { type LinkProps as NextLinkProps } from "next/link";
-import { chakra } from "@chakra-ui/react";
+import { LocalLink, type LocalLinkProps } from "../LocalLink";
 
 const buttonStyles = {
   primary: {
@@ -28,13 +27,9 @@ type ButtonLinkVariant = keyof typeof buttonStyles;
 
 export type ButtonLinkProps = {
   variant?: ButtonLinkVariant;
-  href: NextLinkProps["href"];
+  href: LocalLinkProps["href"];
   children: React.ReactNode;
 };
-
-const MagicLink = chakra<typeof NextLink, NextLinkProps>(NextLink, {
-  shouldForwardProp: (prop) => ["href", "target", "children"].includes(prop),
-});
 
 export function ButtonLink({
   variant = "primary",
@@ -43,7 +38,7 @@ export function ButtonLink({
 }: ButtonLinkProps) {
   const buttonStyle = buttonStyles[variant];
   return (
-    <MagicLink
+    <LocalLink
       href={href}
       {...buttonStyle}
       display="inline-block"
@@ -59,6 +54,6 @@ export function ButtonLink({
       }}
     >
       {children}
-    </MagicLink>
+    </LocalLink>
   );
 }
