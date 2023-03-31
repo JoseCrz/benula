@@ -1,5 +1,4 @@
-import type { MenuItem } from "@/types";
-import { useState, forwardRef } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import chunk from "lodash.chunk";
@@ -72,11 +71,7 @@ function DesktopMenu({ menuCategories }: DesktopMenuProps) {
         </Tabs.List>
         <Box width="100%" height="2px" backgroundColor="rgba(0, 0, 0, 0.04)" />
         {menuCategories.map((category) => (
-          <TabPanel
-            key={category._id}
-            value={category.name}
-            menuItems={category.menuItems}
-          />
+          <TabPanel key={category._id} menuCategory={category} />
         ))}
       </Tabs.Root>
     </Box>
@@ -119,21 +114,34 @@ function TabButton({
 }
 
 type TabPanelProps = {
-  value: Tabs.TabsContentProps["value"];
-  menuItems: MenuPageProps["menuCategories"][number]["menuItems"];
+  menuCategory: MenuPageProps["menuCategories"][number];
 };
 
-function TabPanel({ value, menuItems }: TabPanelProps) {
-  const chunkSize = Math.ceil(menuItems.length / 2);
-  const chunks = chunk(menuItems, chunkSize);
+function TabPanel({ menuCategory }: TabPanelProps) {
+  const { isAvailable } = useAvailability(menuCategory.availability);
+  const chunkSize = Math.ceil(menuCategory.menuItems.length / 2);
+  const chunks = chunk(menuCategory.menuItems, chunkSize);
 
   return (
-    <Tabs.Content value={value}>
+    <Tabs.Content value={menuCategory.name}>
+      {menuCategory.availability && (
+        <Box
+          backgroundColor="#EFEFEF"
+          borderRadius="10px"
+          textAlign="center"
+          p={1}
+          mt={3}
+        >
+          <Text fontWeight="bold" color="#7C1819" fontSize="24px">
+            {getAvailabilityText(menuCategory.availability)}
+          </Text>
+        </Box>
+      )}
       <Box pt={12}>
         <Grid gridTemplateColumns="1fr 1fr" columnGap={12}>
           {chunks.map((chunk, index) => (
             <Grid
-              key={value + index}
+              key={menuCategory.name + index}
               gridTemplateColumns="1fr"
               rowGap={9}
               alignContent="start"
@@ -145,14 +153,25 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
                   px={6}
                 >
                   <Flex alignItems="baseline">
-                    <Text fontSize="24px" mr={6}>
+                    <Text
+                      fontSize="24px"
+                      mr={6}
+                      color={!isAvailable ? "#A3A3A3" : undefined}
+                    >
                       ${item.price}
                     </Text>
-                    <Text fontWeight="bold" fontSize="32px">
+                    <Text
+                      fontWeight="bold"
+                      fontSize="32px"
+                      color={!isAvailable ? "#A3A3A3" : undefined}
+                    >
                       {item.name}
                     </Text>
                   </Flex>
-                  <Text fontSize="20px" color="#4D4D4D">
+                  <Text
+                    fontSize="20px"
+                    color={!isAvailable ? "#A3A3A3" : "#4D4D4D"}
+                  >
                     {item.excerpt}
                   </Text>
                   {item.options &&
@@ -160,10 +179,14 @@ function TabPanel({ value, menuItems }: TabPanelProps) {
                       <Text
                         key={`${item.name}-option-${index}`}
                         fontSize="24px"
-                        color="#4D4D4D"
+                        color={!isAvailable ? "#A3A3A3" : "#4D4D4D"}
                       >
                         ${option.optionPrice}{" "}
-                        <Text as="span" fontSize="20px">
+                        <Text
+                          as="span"
+                          fontSize="20px"
+                          color={!isAvailable ? "#A3A3A3" : undefined}
+                        >
                           {option.optionDescription}
                         </Text>
                       </Text>
@@ -204,7 +227,7 @@ function MobileMenu({ menuCategories }: MobileMenuProps) {
               <AccordionTrigger value={category.name}>
                 {category.name}
               </AccordionTrigger>
-              <AccordionContent menuItems={category.menuItems} />
+              <AccordionContent menuCategory={category} />
             </Accordion.Item>
           ))}
         </Grid>
@@ -268,11 +291,12 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
 AccordionTrigger.displayName = "AccordionTrigger";
 
 type AccordionContentProps = {
-  menuItems: MenuPageProps["menuCategories"][number]["menuItems"];
+  menuCategory: MenuPageProps["menuCategories"][number];
 } & Accordion.AccordionContentProps;
 
 const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
-  ({ menuItems, ...rest }, ref) => {
+  ({ menuCategory, ...rest }, ref) => {
+    const { isAvailable } = useAvailability(menuCategory.availability);
     return (
       <Accordion.Content ref={ref} asChild {...rest}>
         <Box
@@ -282,24 +306,49 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
           py={3}
           overflow="hidden"
         >
-          {menuItems.map((item) => (
+          {menuCategory.availability && (
+            <Box borderBottom="1px solid #E4E4E4" pb={5}>
+              <Box
+                backgroundColor="#EFEFEF"
+                borderRadius="10px"
+                textAlign="center"
+                p={1}
+                mt={3}
+              >
+                <Text fontWeight="bold" color="#7C1819" fontSize="16px">
+                  {getAvailabilityText(menuCategory.availability)}
+                </Text>
+              </Box>
+            </Box>
+          )}
+          {menuCategory.menuItems.map((item) => (
             <Box key={item.name} borderBottom="1px solid #E4E4E4" pt={2} pb={5}>
               <Flex alignItems="baseline">
-                <Text fontSize="18px" mr={3}>
+                <Text
+                  fontSize="18px"
+                  mr={3}
+                  color={!isAvailable ? "#A3A3A3" : undefined}
+                >
                   ${item.price}
                 </Text>
-                <Text fontWeight="bold" fontSize="20px">
+                <Text
+                  fontWeight="bold"
+                  fontSize="20px"
+                  color={!isAvailable ? "#A3A3A3" : undefined}
+                >
                   {item.name}
                 </Text>
               </Flex>
-              <Text mt={6}>{item.excerpt}</Text>
+              <Text mt={6} color={!isAvailable ? "#A3A3A3" : undefined}>
+                {item.excerpt}
+              </Text>
               {item.options &&
                 item.options.map((option, index) => (
                   <Text
                     mt={1}
                     key={`${item.name}-option-${index}`}
                     fontSize="18px"
-                    color="#4D4D4D"
+                    color={!isAvailable ? "#A3A3A3" : "#4D4D4D"}
                   >
                     ${option.optionPrice}{" "}
                     <Text as="span" fontSize="16px">
@@ -321,3 +370,62 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
 );
 
 AccordionContent.displayName = "AccordionContent";
+
+// ==========================
+// Utility functions
+
+function useAvailability(
+  availability: TabPanelProps["menuCategory"]["availability"]
+) {
+  const [isAvailable, setIsAvailable] = useState(false);
+  useEffect(() => {
+    setIsAvailable(getIsAvailable(availability));
+  }, [availability]);
+
+  return { isAvailable };
+}
+
+function getAvailabilityText(
+  availability: MenuPageProps["menuCategories"][number]["availability"]
+) {
+  function getTimeString(time: number) {
+    if (time <= 11) return `${time}am`;
+
+    if (time === 12) return `${time}pm`;
+
+    return `${time - 12}pm`;
+  }
+
+  return ` disponible de ${getTimeString(
+    availability!.startTime
+  )} a ${getTimeString(availability!.endTime)}`;
+}
+
+function getIsAvailable(
+  availabitity: TabPanelProps["menuCategory"]["availability"]
+) {
+  if (!availabitity) return true;
+
+  const availabilityMap = createAvailabityMap(availabitity);
+  const currentHour = new Date().getHours();
+  return availabilityMap[currentHour] === "available";
+}
+
+function createAvailabityMap(
+  availabitity: Exclude<
+    TabPanelProps["menuCategory"]["availability"],
+    undefined
+  >
+) {
+  const availabilityMap: Record<number, "available" | "unavailable"> = {};
+
+  for (let i = 0; i < 24; i++) {
+    availabilityMap[i] = "unavailable";
+  }
+
+  for (let i = availabitity.startTime; i <= availabitity.endTime; i++) {
+    availabilityMap[i] = "available";
+  }
+
+  return availabilityMap;
+}
