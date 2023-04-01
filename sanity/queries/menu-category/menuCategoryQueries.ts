@@ -9,7 +9,7 @@ const allMenuCategoriesQuery = groq`
   name,
   placement,
   availability,
-  menuItems[]->{_id, name, price, excerpt, options, slug}
+  categoryItems[]->
 }
 `;
 
