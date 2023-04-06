@@ -153,13 +153,19 @@ function TabPanel({ menuCategory }: TabPanelProps) {
                   px={6}
                 >
                   <Flex alignItems="baseline">
-                    <Text
-                      fontSize="24px"
-                      mr={6}
-                      color={!isAvailable ? "#A3A3A3" : undefined}
-                    >
-                      ${item.price}
-                    </Text>
+                    {item.price && (
+                      <Text
+                        backgroundColor="#F8EFDE"
+                        fontSize="32px"
+                        p="6px"
+                        borderRadius="4px"
+                        mr={6}
+                        fontWeight="bold"
+                        color={!isAvailable ? "#A3A3A3" : undefined}
+                      >
+                        ${item.price}
+                      </Text>
+                    )}
                     <Text
                       fontWeight="bold"
                       fontSize="32px"
@@ -200,7 +206,15 @@ function TabPanel({ menuCategory }: TabPanelProps) {
                       mt={2}
                       fontSize={["16px", "20px"]}
                     >
-                      <Link href={`/menu/${item.slug.current}`}>ver más</Link>
+                      <Link
+                        href={
+                          item._type === "dessert"
+                            ? `/postre-del-mes/${item.slug.current}`
+                            : `/menu/${item.slug.current}`
+                        }
+                      >
+                        ver más
+                      </Link>
                     </Text>
                   )}
                 </Box>
@@ -327,13 +341,15 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
           {menuCategory.categoryItems.map((item) => (
             <Box key={item.name} borderBottom="1px solid #E4E4E4" pt={2} pb={5}>
               <Flex alignItems="baseline">
-                <Text
-                  fontSize="18px"
-                  mr={3}
-                  color={!isAvailable ? "#A3A3A3" : undefined}
-                >
-                  ${item.price}
-                </Text>
+                {item.price && (
+                  <Text
+                    fontSize="18px"
+                    mr={3}
+                    color={!isAvailable ? "#A3A3A3" : undefined}
+                  >
+                    ${item.price}
+                  </Text>
+                )}
                 <Text
                   fontWeight="bold"
                   fontSize="20px"
@@ -362,7 +378,15 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
                 ))}
               {item.slug && (
                 <Text textDecoration="underline" mt={2}>
-                  <Link href={`/menu/${item.slug.current}`}>ver más</Link>
+                  <Link
+                    href={
+                      item._type === "dessert"
+                        ? `/postre-del-mes/${item.slug.current}`
+                        : `/menu/${item.slug.current}`
+                    }
+                  >
+                    ver más
+                  </Link>
                 </Text>
               )}
             </Box>
