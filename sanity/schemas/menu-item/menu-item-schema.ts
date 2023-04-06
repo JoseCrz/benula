@@ -7,7 +7,7 @@ export type MenuItem = {
   _id: string;
   _type: "menuItem";
   name: string;
-  price: number;
+  price?: number;
   excerpt: string;
   hasOptions: boolean;
   options?: {
