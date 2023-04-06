@@ -15,6 +15,7 @@ export type Dessert = {
     };
   };
   name: string;
+  menuName?: string;
   slug: {
     _type: "slug";
     current: string;
@@ -57,6 +58,11 @@ export const dessertType = defineType({
       title: "nombre",
       type: "string",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "menuName",
+      title: "Nombre en el menú",
+      type: "string",
     }),
     defineField({
       name: "slug",

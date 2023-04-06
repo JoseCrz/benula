@@ -119,8 +119,8 @@ type TabPanelProps = {
 
 function TabPanel({ menuCategory }: TabPanelProps) {
   const { isAvailable } = useAvailability(menuCategory.availability);
-  const chunkSize = Math.ceil(menuCategory.menuItems.length / 2);
-  const chunks = chunk(menuCategory.menuItems, chunkSize);
+  const chunkSize = Math.ceil(menuCategory.categoryItems.length / 2);
+  const chunks = chunk(menuCategory.categoryItems, chunkSize);
 
   return (
     <Tabs.Content value={menuCategory.name}>
@@ -165,7 +165,9 @@ function TabPanel({ menuCategory }: TabPanelProps) {
                       fontSize="32px"
                       color={!isAvailable ? "#A3A3A3" : undefined}
                     >
-                      {item.name}
+                      {item._type === "dessert" && item.menuName
+                        ? item.menuName
+                        : item.name}
                     </Text>
                   </Flex>
                   <Text
@@ -174,7 +176,8 @@ function TabPanel({ menuCategory }: TabPanelProps) {
                   >
                     {item.excerpt}
                   </Text>
-                  {item.options &&
+                  {item._type === "menuItem" &&
+                    item.options &&
                     item.options.map((option, index) => (
                       <Text
                         key={`${item.name}-option-${index}`}
@@ -321,7 +324,7 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
               </Box>
             </Box>
           )}
-          {menuCategory.menuItems.map((item) => (
+          {menuCategory.categoryItems.map((item) => (
             <Box key={item.name} borderBottom="1px solid #E4E4E4" pt={2} pb={5}>
               <Flex alignItems="baseline">
                 <Text
@@ -342,7 +345,8 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
               <Text mt={6} color={!isAvailable ? "#A3A3A3" : undefined}>
                 {item.excerpt}
               </Text>
-              {item.options &&
+              {item._type === "menuItem" &&
+                item.options &&
                 item.options.map((option, index) => (
                   <Text
                     mt={1}
