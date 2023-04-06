@@ -103,6 +103,8 @@ export default function Home({
         pb={["200px", "157px"]}
         textAlign="center"
         position="relative"
+        backgroundImage={`/images/wave.svg`}
+        backgroundPosition="bottom"
       >
         <Container>
           <Box
@@ -129,15 +131,6 @@ export default function Home({
             <ButtonLink href="/menu">conócelos todos aquí</ButtonLink>
           </Box>
         </Container>
-        <Box
-          display={["none", "block"]}
-          position="absolute"
-          width="100%"
-          height={130}
-          bottom={0}
-        >
-          <Image src={waveSvg} alt="" fill />
-        </Box>
       </Section>
       <Section backgroundColor="#FAFAFA" pb={12}>
         <DessertsCarousel desserts={restOfDesserts} />
