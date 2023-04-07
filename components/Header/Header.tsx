@@ -105,7 +105,11 @@ function DesktopHeader({
               </Link>
             </Box>
             <Flex display={["none", "flex"]} alignItems="center">
-              <Box color={variantStyles.textColor} mr={6}>
+              <Box
+                color={variantStyles.textColor}
+                mr={6}
+                _hover={{ textDecoration: "underline" }}
+              >
                 <Link href="/postre-del-mes">postre del mes</Link>
               </Box>
               <ButtonLink
