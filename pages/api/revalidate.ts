@@ -24,7 +24,10 @@ export default async function revalidate(
       process.env.SANITY_REVALIDATE_SECRET
     );
 
+    console.log("🚀 ~ isValidSignature:", isValidSignature);
+    console.log("🚀 ~ body:", { ...body });
     if (!isValidSignature) {
+      console.log("entering the !isValidSignature branch");
       return response.status(401).send("Invalid signature");
     }
 
