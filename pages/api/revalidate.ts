@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getAllDessertSlugs } from "@/sanity/queries";
+import { getAllDessertSlugs, getAllMenuItemSlugs } from "@/sanity/queries";
 import type {
   Dessert,
   MenuCategory,
@@ -53,6 +53,10 @@ async function queryStaleRoutes(body: DocumentBody): Promise<string[]> {
   switch (body._type) {
     case "dessert":
       return await queryStaleDessertRoutes();
+    case "menuItem":
+      return await queryStaleMenuItemRoutes();
+    case "menuCategory":
+      return ["/menu"];
     default:
       return ["/"];
   }
@@ -61,6 +65,17 @@ async function queryStaleRoutes(body: DocumentBody): Promise<string[]> {
 async function queryStaleDessertRoutes() {
   const slugs = await getAllDessertSlugs();
 
-  const dessertRoutes = slugs.map((slug) => `/postre-del-mes/${slug}`);
-  return dessertRoutes;
+  const individualDessertRoutes = slugs.map(
+    (slug) => `/postre-del-mes/${slug}`
+  );
+
+  return ["/", "/postre-del-mes", ...individualDessertRoutes];
+}
+
+async function queryStaleMenuItemRoutes() {
+  const slugs = await getAllMenuItemSlugs();
+
+  const individualMenuItemRoutes = slugs.map((slug) => `/menu/${slug}`);
+
+  return ["/", "/menu", ...individualMenuItemRoutes];
 }
