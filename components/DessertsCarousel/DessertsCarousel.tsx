@@ -62,18 +62,21 @@ export function DessertsCarousel({ desserts }: CarouselProps) {
                   justifyContent="space-between"
                 >
                   <Box>
-                    <Heading color="white" display="inline" fontSize="40px">
-                      {dessert.name}{" "}
-                    </Heading>
                     <Text
-                      as="span"
-                      display={["block", "inline"]}
-                      color="#81191A"
-                      fontSize="24px"
-                      fontWeight={400}
+                      width="fit-content"
+                      px="4px"
+                      backgroundColor="white"
+                      color="#1B1B1B"
+                      fontSize="20px"
+                      fontWeight="bold"
+                      borderRadius="4px"
                     >
                       {dessert.collaborator}
                     </Text>
+                    <Heading color="white" display="inline" fontSize="40px">
+                      {dessert.name}{" "}
+                    </Heading>
+
                     <Text fontSize="20px" color="white">
                       postre de {getDateString(dessert.date)}
                     </Text>
