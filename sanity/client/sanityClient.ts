@@ -7,5 +7,6 @@ export const sanityClient = SANITY_PROJECT_ID
       projectId: SANITY_PROJECT_ID,
       dataset: SANITY_DATASET,
       apiVersion: SANITY_API_VERSION,
+      useCdn: false,
     })
   : null;
