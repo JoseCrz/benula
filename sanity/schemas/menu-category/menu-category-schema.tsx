@@ -4,12 +4,11 @@ import { BiFoodMenu } from "react-icons/bi";
 import { menuItemType, type MenuItem } from "../menu-item";
 import { dessertType, type Dessert } from "../dessert";
 
-export const MENU_CATEGORY_NAME = "menuCategory";
-
 type CategoryItem = MenuItem | Dessert;
 
 export type MenuCategory = {
   _id: string;
+  _type: "menuCategory";
   name: string;
   placement: number;
   categoryItems: CategoryItem[];
@@ -21,7 +20,7 @@ export type MenuCategory = {
 
 export const menuCategoryType = defineType({
   type: "document",
-  name: MENU_CATEGORY_NAME,
+  name: "menuCategory",
   title: "Categoria de Menú",
   icon: BiFoodMenu,
   fields: [
