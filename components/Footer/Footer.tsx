@@ -1,13 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Box, Flex, Icon, Text } from "@chakra-ui/react";
-import {
-  FaWhatsapp,
-  FaTiktok,
-  FaFacebook,
-  FaInstagram,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaWhatsapp, FaTiktok, FaFacebook, FaInstagram } from "react-icons/fa";
 import { Container, Section } from "@/components";
 
 export function Footer() {
@@ -40,17 +34,34 @@ export function Footer() {
                   listStyleType="none"
                   fontSize={["14px", "16px"]}
                 >
-                  <Box as="li" mr={8}>
+                  <Box
+                    as="li"
+                    mr={8}
+                    _hover={{
+                      color: "#81191A",
+                    }}
+                  >
                     <Link href="/">
                       <strong>home</strong>
                     </Link>
                   </Box>
-                  <Box as="li" mr={8}>
+                  <Box
+                    as="li"
+                    mr={8}
+                    _hover={{
+                      color: "#81191A",
+                    }}
+                  >
                     <Link href="/menu">
                       <strong>carta de alimentos</strong>
                     </Link>
                   </Box>
-                  <Box as="li">
+                  <Box
+                    as="li"
+                    _hover={{
+                      color: "#81191A",
+                    }}
+                  >
                     <Link href="/postre-del-mes">
                       <strong>postre del mes</strong>
                     </Link>
@@ -60,13 +71,62 @@ export function Footer() {
             </Box>
             <Box mt={[8, 0]}>
               <Flex>
-                <Link href="/">
-                  <Icon as={FaWhatsapp} mr={3} fontSize="24px" />
+                <Link
+                  href="https://wa.me/5212282367656"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon
+                    as={FaWhatsapp}
+                    mr={3}
+                    fontSize="24px"
+                    _hover={{
+                      color: "#81191A",
+                    }}
+                  />
                 </Link>
-                <Icon as={FaTiktok} mr={3} fontSize="24px" />
-                <Icon as={FaFacebook} mr={3} fontSize="24px" />
-                <Icon as={FaInstagram} mr={3} fontSize="24px" />
-                <Icon as={FaTwitter} fontSize="24px" />
+                <Link
+                  href="https://www.tiktok.com/@benulapostreria"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon
+                    as={FaTiktok}
+                    mr={3}
+                    fontSize="24px"
+                    _hover={{
+                      color: "#81191A",
+                    }}
+                  />
+                </Link>
+                <Link
+                  href="https://www.facebook.com/benula.bu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon
+                    as={FaFacebook}
+                    mr={3}
+                    fontSize="24px"
+                    _hover={{
+                      color: "#81191A",
+                    }}
+                  />
+                </Link>
+                <Link
+                  href="https://www.instagram.com/benulapostreria/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon
+                    as={FaInstagram}
+                    mr={3}
+                    fontSize="24px"
+                    _hover={{
+                      color: "#81191A",
+                    }}
+                  />
+                </Link>
               </Flex>
             </Box>
           </Flex>
@@ -86,7 +146,11 @@ export function Footer() {
                 </Text>
 
                 <Box mr={3}>
-                  <Link href="/">
+                  <Link
+                    href="https://www.instagram.com/benulapostreria/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Flex
                       justifyContent="center"
                       alignItems="center"
@@ -94,13 +158,20 @@ export function Footer() {
                       height={["48px", "60px"]}
                       borderRadius="50%"
                       backgroundColor="white"
+                      _hover={{
+                        color: "#81191A",
+                      }}
                     >
                       <Icon as={FaInstagram} fontSize={["24px", "35px"]} />
                     </Flex>
                   </Link>
                 </Box>
                 <Box>
-                  <Link href="/">
+                  <Link
+                    href={`https://wa.me/5212282367656?text=${encodeURIComponent(
+                      "Hola! Quisiera hacer una reservación."
+                    )}`}
+                  >
                     <Flex
                       justifyContent="center"
                       alignItems="center"
@@ -108,6 +179,9 @@ export function Footer() {
                       height={["48px", "60px"]}
                       borderRadius="50%"
                       backgroundColor="white"
+                      _hover={{
+                        color: "#81191A",
+                      }}
                     >
                       <Icon as={FaWhatsapp} fontSize={["24px", "35px"]} />
                     </Flex>
