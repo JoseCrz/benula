@@ -3,6 +3,7 @@ import { BsFillPersonBadgeFill } from "react-icons/bs";
 
 export type StaffMember = {
   _id: string;
+  _type: "staffMember";
   name: string;
   role: string;
   image: {
