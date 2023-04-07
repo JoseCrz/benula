@@ -1,10 +1,10 @@
 import { groq } from "next-sanity";
 import { sanityClient } from "@/sanity/client";
 
-import { MENU_CATEGORY_NAME, type MenuCategory } from "@/sanity/schemas";
+import { menuCategoryType, type MenuCategory } from "@/sanity/schemas";
 
 const allMenuCategoriesQuery = groq`
-*[_type == "${MENU_CATEGORY_NAME}"] | order(placement asc) {
+*[_type == "${menuCategoryType.name}"] | order(placement asc) {
   _id, 
   name,
   placement,
