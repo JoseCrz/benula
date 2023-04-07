@@ -15,14 +15,11 @@ export default async function revalidate(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  console.log("🚀 ~ request:", { ...request });
   try {
     const { isValidSignature, body } = await parseBody(
       request,
       process.env.SANITY_REVALIDATE_SECRET
     );
-
-    console.log("🚀 ~ isValidSignature:", isValidSignature);
 
     if (!isValidSignature) {
       return response.status(401).send("Invalid signature");
