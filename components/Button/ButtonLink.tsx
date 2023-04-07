@@ -5,21 +5,39 @@ const buttonStyles = {
     backgroundColor: "#81191A",
     borderColor: "#81191A",
     color: "white",
+    _hover: {
+      backgroundColor: "#D6292B",
+      borderColor: "#D6292B",
+    },
   },
   transparent: {
     backgroundColor: "transparent",
     color: "white",
     borderColor: "white",
+    _hover: {
+      backgroundColor: "white",
+      color: "#81191A",
+      borderColor: "white",
+    },
   },
   black: {
     backgroundColor: "transparent",
     color: "#2D2D2D",
     borderColor: "#2D2D2D",
+    _hover: {
+      color: "#81191A",
+      borderColor: "#81191A",
+    },
   },
   white: {
     backgroundColor: "white",
     color: "#81191A",
     borderColor: "white",
+    _hover: {
+      color: "#D6292B",
+      borderColor: "#D6292B",
+      textDecoration: "none",
+    },
   },
 } as const;
 
@@ -49,9 +67,6 @@ export function ButtonLink({
       fontSize={["12px", "14px"]}
       px="34px"
       py={2}
-      _hover={{
-        textDecoration: "none",
-      }}
     >
       {children}
     </LocalLink>
