@@ -68,7 +68,10 @@ export function FeaturedSection({ gridItems }: FeaturedSectionProps) {
                   {item.excerpt}
                 </Text>
                 <Link href={itemHref}>
-                  <Flex alignItems="center">
+                  <Flex
+                    alignItems="center"
+                    _hover={{ textDecoration: "underline" }}
+                  >
                     ver más <Icon as={FaChevronRight} ml={2} />
                   </Flex>
                 </Link>
