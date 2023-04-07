@@ -15,6 +15,10 @@ export default async function revalidate(
   response: NextApiResponse
 ) {
   try {
+    console.log(
+      "🚀 ~  process.env.SANITY_REVALIDATE_SECRET:",
+      process.env.SANITY_REVALIDATE_SECRET
+    );
     const { isValidSignature, body } = await parseBody(
       request,
       process.env.SANITY_REVALIDATE_SECRET
