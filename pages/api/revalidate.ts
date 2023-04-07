@@ -9,6 +9,7 @@ import type {
 import type { SanityDocument } from "sanity";
 
 import { parseBody } from "next-sanity/webhook";
+export { config } from "next-sanity/webhook";
 
 export default async function revalidate(
   request: NextApiRequest,
@@ -16,17 +17,13 @@ export default async function revalidate(
 ) {
   console.log("🚀 ~ request:", { ...request });
   try {
-    console.log(
-      "🚀 ~  process.env.SANITY_REVALIDATE_SECRET:",
-      process.env.SANITY_REVALIDATE_SECRET
-    );
     const { isValidSignature, body } = await parseBody(
       request,
       process.env.SANITY_REVALIDATE_SECRET
     );
 
     console.log("🚀 ~ isValidSignature:", isValidSignature);
-    console.log("🚀 ~ body:", { ...body });
+
     if (!isValidSignature) {
       return response.status(401).send("Invalid signature");
     }
