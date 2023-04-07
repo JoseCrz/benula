@@ -14,6 +14,7 @@ export default async function revalidate(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
+  console.log("🚀 ~ request:", { ...request });
   try {
     console.log(
       "🚀 ~  process.env.SANITY_REVALIDATE_SECRET:",
@@ -27,7 +28,6 @@ export default async function revalidate(
     console.log("🚀 ~ isValidSignature:", isValidSignature);
     console.log("🚀 ~ body:", { ...body });
     if (!isValidSignature) {
-      console.log("entering the !isValidSignature branch");
       return response.status(401).send("Invalid signature");
     }
 
