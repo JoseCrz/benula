@@ -31,7 +31,7 @@ export async function getStaticPaths() {
 
   return {
     paths: slugs.map((slug) => `/postre-del-mes/${slug}`),
-    fallback: false,
+    fallback: "blocking",
   };
 }
 
