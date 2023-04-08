@@ -200,23 +200,7 @@ function TabPanel({ menuCategory }: TabPanelProps) {
                         </Text>
                       </Text>
                     ))}
-                  {item.slug && (
-                    <Text
-                      textDecoration="underline"
-                      mt={2}
-                      fontSize={["16px", "20px"]}
-                    >
-                      <Link
-                        href={
-                          item._type === "dessert"
-                            ? `/postre-del-mes/${item.slug.current}`
-                            : `/menu/${item.slug.current}`
-                        }
-                      >
-                        ver más
-                      </Link>
-                    </Text>
-                  )}
+                  <MenuItemLink menuItem={item} />
                 </Box>
               ))}
             </Grid>
@@ -376,19 +360,7 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
                     </Text>
                   </Text>
                 ))}
-              {item.slug && (
-                <Text textDecoration="underline" mt={2}>
-                  <Link
-                    href={
-                      item._type === "dessert"
-                        ? `/postre-del-mes/${item.slug.current}`
-                        : `/menu/${item.slug.current}`
-                    }
-                  >
-                    ver más
-                  </Link>
-                </Text>
-              )}
+              <MenuItemLink menuItem={item} />
             </Box>
           ))}
         </Box>
@@ -400,12 +372,42 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
 AccordionContent.displayName = "AccordionContent";
 
 // ==========================
+// Local Components
+type MenuItemLinkProps = {
+  menuItem: MenuPageProps["menuCategories"][number]["categoryItems"][number];
+};
+
+function MenuItemLink({ menuItem }: MenuItemLinkProps) {
+  if (!menuItem.slug) return null;
+
+  switch (menuItem._type) {
+    case "menuItem": {
+      if (!menuItem.hasDetailPage) return null;
+      return (
+        <Text textDecoration="underline" mt={2} fontSize={["16px", "20px"]}>
+          <Link href={`/menu/${menuItem.slug.current}`}>ver más</Link>
+        </Text>
+      );
+    }
+    case "dessert": {
+      return (
+        <Text textDecoration="underline" mt={2} fontSize={["16px", "20px"]}>
+          <Link href={`/postre-del-mes/${menuItem.slug.current}`}>ver más</Link>
+        </Text>
+      );
+    }
+    default:
+      return null;
+  }
+}
+
+// ==========================
 // Utility functions
 
 function useAvailability(
   availability: TabPanelProps["menuCategory"]["availability"]
 ) {
-  const [isAvailable, setIsAvailable] = useState(false);
+  const [isAvailable, setIsAvailable] = useState(true);
   useEffect(() => {
     setIsAvailable(getIsAvailable(availability));
   }, [availability]);
