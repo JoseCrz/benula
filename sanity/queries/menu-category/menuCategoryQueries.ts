@@ -9,6 +9,7 @@ const allMenuCategoriesQuery = groq`
   name,
   placement,
   availability,
+  hasLimitedAvailability,
   categoryItems[]->
 }
 `;

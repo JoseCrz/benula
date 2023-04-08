@@ -12,6 +12,7 @@ export type MenuCategory = {
   name: string;
   placement: number;
   categoryItems: CategoryItem[];
+  hasLimitedAvailability: boolean;
   availability?: {
     startTime: number;
     endTime: number;
@@ -55,7 +56,7 @@ export const menuCategoryType = defineType({
       ],
     }),
     defineField({
-      name: "shouldAddLimitedService",
+      name: "hasLimitedAvailability",
       title: "servicio limitado",
       type: "boolean",
       initialValue: false,
@@ -88,7 +89,7 @@ export const menuCategoryType = defineType({
           },
         }),
       ],
-      hidden: ({ document }) => !document?.shouldAddLimitedService,
+      hidden: ({ document }) => !document?.hasLimitedAvailability,
     }),
   ],
 });

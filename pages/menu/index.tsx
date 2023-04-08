@@ -118,13 +118,13 @@ type TabPanelProps = {
 };
 
 function TabPanel({ menuCategory }: TabPanelProps) {
-  const { isAvailable } = useAvailability(menuCategory.availability);
+  const { isAvailable } = useAvailability(menuCategory);
   const chunkSize = Math.ceil(menuCategory.categoryItems.length / 2);
   const chunks = chunk(menuCategory.categoryItems, chunkSize);
 
   return (
     <Tabs.Content value={menuCategory.name}>
-      {menuCategory.availability && (
+      {menuCategory.hasLimitedAvailability && (
         <Box
           backgroundColor="#EFEFEF"
           borderRadius="10px"
@@ -297,7 +297,7 @@ type AccordionContentProps = {
 
 const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
   ({ menuCategory, ...rest }, ref) => {
-    const { isAvailable } = useAvailability(menuCategory.availability);
+    const { isAvailable } = useAvailability(menuCategory);
     return (
       <Accordion.Content ref={ref} asChild {...rest}>
         <Box
@@ -307,7 +307,7 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
           py={3}
           overflow="hidden"
         >
-          {menuCategory.availability && (
+          {menuCategory.hasLimitedAvailability && (
             <Box borderBottom="1px solid #E4E4E4" pb={5}>
               <Box
                 backgroundColor="#EFEFEF"
@@ -404,13 +404,11 @@ function MenuItemLink({ menuItem }: MenuItemLinkProps) {
 // ==========================
 // Utility functions
 
-function useAvailability(
-  availability: TabPanelProps["menuCategory"]["availability"]
-) {
+function useAvailability(menuCategory: TabPanelProps["menuCategory"]) {
   const [isAvailable, setIsAvailable] = useState(true);
   useEffect(() => {
-    setIsAvailable(getIsAvailable(availability));
-  }, [availability]);
+    setIsAvailable(getIsAvailable(menuCategory));
+  }, [menuCategory]);
 
   return { isAvailable };
 }
@@ -431,12 +429,13 @@ function getAvailabilityText(
   )} a ${getTimeString(availability!.endTime)}`;
 }
 
-function getIsAvailable(
-  availabitity: TabPanelProps["menuCategory"]["availability"]
-) {
-  if (!availabitity) return true;
+function getIsAvailable({
+  hasLimitedAvailability,
+  availability,
+}: TabPanelProps["menuCategory"]) {
+  if (!hasLimitedAvailability || !availability) return true;
 
-  const availabilityMap = createAvailabityMap(availabitity);
+  const availabilityMap = createAvailabityMap(availability);
   const currentHour = new Date().getHours();
   return availabilityMap[currentHour] === "available";
 }
