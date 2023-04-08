@@ -299,6 +299,12 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
             borderTopRightRadius="2px"
             borderTopLeftRadius="2px"
             border="1px solid #D7D7D7"
+            _hover={{
+              background: "#EFEFEF",
+            }}
+            _active={{
+              background: "#EFEFEF",
+            }}
           >
             {children}
             <Icon

@@ -171,6 +171,12 @@ function MobileHeader({
                 <Button
                   display={["block", "none"]}
                   backgroundColor="transparent"
+                  _hover={{
+                    background: "#EFEFEF",
+                  }}
+                  _active={{
+                    background: "#EFEFEF",
+                  }}
                 >
                   <Icon
                     as={isOpen ? FaTimes : FaBars}
