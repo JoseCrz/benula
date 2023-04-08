@@ -1,4 +1,4 @@
-import { useState, useEffect, forwardRef } from "react";
+import { useState, useEffect, useRef, forwardRef } from "react";
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import chunk from "lodash.chunk";
@@ -57,17 +57,29 @@ function DesktopMenu({ menuCategories }: DesktopMenuProps) {
     <Box display={["none", "block"]} mt={[12]}>
       <Tabs.Root value={currentValue} onValueChange={setCurrentValue}>
         <Tabs.List aria-label="menu">
-          <Flex alignItems="center">
-            {menuCategories.map((category) => (
-              <TabButton
-                key={category._id}
-                value={category.name}
-                currentValue={currentValue}
+          <Box id="container-ref" alignItems="center" position="relative">
+            <Box id="wrapperBox" overflow="hidden">
+              <Box
+                overflowX="scroll"
+                overflowY="hidden"
+                maxHeight="75px"
+                pb="75px"
+                mb="-12px"
               >
-                {category.name}
-              </TabButton>
-            ))}
-          </Flex>
+                <Flex>
+                  {menuCategories.map((category) => (
+                    <TabButton
+                      key={category._id}
+                      value={category.name}
+                      currentValue={currentValue}
+                    >
+                      {category.name}
+                    </TabButton>
+                  ))}
+                </Flex>
+              </Box>
+            </Box>
+          </Box>
         </Tabs.List>
         <Box width="100%" height="2px" backgroundColor="rgba(0, 0, 0, 0.04)" />
         {menuCategories.map((category) => (
@@ -89,8 +101,24 @@ function TabButton({
   ...rest
 }: TabsButtonProps) {
   const isActive = currentValue === value;
+
+  const buttonRef = useRef<HTMLDivElement | null>(null);
+
   return (
-    <>
+    <Flex
+      flexShrink={0}
+      alignItems="center"
+      ref={buttonRef}
+      onClick={() => {
+        if (!buttonRef.current) return;
+
+        buttonRef.current.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }}
+    >
       <Tabs.Trigger asChild value={value} {...rest}>
         <Button
           fontSize="42px"
@@ -100,6 +128,9 @@ function TabButton({
           px={6}
           backgroundColor="white"
           color={isActive ? "#81191A" : "rgba(115, 115, 115, 0.6)"}
+          _hover={{
+            background: "#EFEFEF",
+          }}
         >
           {children}
         </Button>
@@ -109,7 +140,7 @@ function TabButton({
         height="28px"
         backgroundColor="rgba(151, 151, 151, 0.2)"
       />
-    </>
+    </Flex>
   );
 }
 
