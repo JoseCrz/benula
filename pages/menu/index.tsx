@@ -364,6 +364,10 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
               <Flex alignItems="baseline">
                 {item.price && (
                   <Text
+                    backgroundColor="#F8EFDE"
+                    fontWeight="bold"
+                    p="4px"
+                    borderRadius="4px"
                     fontSize="18px"
                     mr={3}
                     color={!isAvailable ? "#A3A3A3" : undefined}
