@@ -23,7 +23,7 @@ export async function getMenuItemBySlug(slug: string): Promise<MenuItem> {
 }
 
 const latestMenuItemsWithDetailPageQuery = groq`
-*[_type == "menuItem" && defined(slug.current)][0...6] | order(_updatedAt desc)
+*[_type == "menuItem" && hasDetailPage == true && defined(slug.current)][0...6] | order(_updatedAt desc)
 `;
 
 export async function getLatestMenuItemsWithDetail(): Promise<MenuItem[]> {
