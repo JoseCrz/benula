@@ -163,7 +163,7 @@ export default function Home({
                 </Text>
               </Box>
               <Box mt={[6, 0]}>
-                <ButtonLink href="/" variant="white">
+                <ButtonLink href="/menu" variant="white">
                   conócelos todos aquí
                 </ButtonLink>
               </Box>
