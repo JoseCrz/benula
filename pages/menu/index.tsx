@@ -31,7 +31,7 @@ export default function Menu({ menuCategories }: MenuPageProps) {
             nuestro menú
           </Heading>
           <Text mt={3} fontSize="18px">
-            descripción de todo el menú aquí
+            todos nuestros alimentos y bebidas son preparados al momento
           </Text>
           <DesktopMenu menuCategories={menuCategories} />
           <MobileMenu menuCategories={menuCategories} />
