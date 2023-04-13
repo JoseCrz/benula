@@ -115,28 +115,12 @@ export default function Home({
         backgroundRepeat="no-repeat"
       >
         <Container>
-          <Box
-            display="inline-block"
-            backgroundColor="#F8EFDE"
-            px={9}
-            py={2}
-            borderRadius="10px"
-          >
-            <Text>
-              <strong>¿alguien dijo postres?</strong>
-            </Text>
-          </Box>
           <Heading mt={4} fontSize={["42px", "40px"]}>
-            te presentamos{" "}
-            <Text as="span" color="#81191A">
-              nuestros favoritos
-            </Text>
+            conoce nuestro <Highlight>menú</Highlight>
           </Heading>
-          <Text mt={4}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </Text>
+          <Text mt={4}>barra de especialidad y cocina contemporánea</Text>
           <Box mt={6}>
-            <ButtonLink href="/menu">conócelos todos aquí</ButtonLink>
+            <ButtonLink href="/menu">ver más</ButtonLink>
           </Box>
         </Container>
       </Section>
@@ -172,10 +156,10 @@ export default function Home({
             >
               <Box>
                 <Heading as="h2" fontSize={["42px", "80px"]} color="white">
-                  métodos de café
+                  métodos de extracción
                 </Heading>
                 <Text mt={3} fontSize={["16px", "20px"]} color="white">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  lo que más nos gusta hacer
                 </Text>
               </Box>
               <Box mt={[6, 0]}>
@@ -192,9 +176,7 @@ export default function Home({
           <Heading as="h2" fontSize="42px">
             el equipo <Highlight>benúla</Highlight>
           </Heading>
-          <Text mt={[3, 4]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </Text>
+          <Text mt={[3, 4]}>conoce a todos nuestros colaboradores</Text>
           <Grid
             mt={[10, 12]}
             gridTemplateColumns={["1fr", "repeat(2, 1fr)"]}
@@ -245,10 +227,16 @@ export default function Home({
         <Container>
           <Box backgroundColor="#81191A">
             <Grid gridTemplateColumns={["1fr", "1fr 2fr"]} gap={[20, 0]}>
-              <Box textAlign="center" color="white" alignSelf="center">
-                <Text>estamos en pleno</Text>
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                color="white"
+                alignSelf="center"
+              >
                 <Text fontSize="36px">
-                  <strong>centro de xalapa</strong>
+                  <strong>ubicación</strong>
                 </Text>
                 <Text
                   mt={4}
@@ -262,14 +250,18 @@ export default function Home({
                   <strong>diego leño #20 xalapa, veracruz</strong>
                 </Text>
                 <Text mt={3} textDecor="underline">
-                  <Link href="/" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://www.google.com/maps/place/Benula+postreria/@19.5258909,-96.9195729,17z/data=!3m1!4b1!4m6!3m5!1s0x85db33a22d046007:0xbb180ed687ebbfae!8m2!3d19.5258909!4d-96.916998!16s%2Fg%2F11pckyrjmp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     llega con google maps
                   </Link>
                 </Text>
                 <Text mt={8} fontSize="20px">
                   <strong>horarios</strong>
                 </Text>
-                <Text>
+                <Text mt={3}>
                   lun 9:30 am - 9:00 pm
                   <br />
                   mar 9:30 am - 9:00 pm
