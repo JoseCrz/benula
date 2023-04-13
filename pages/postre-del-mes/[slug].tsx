@@ -16,15 +16,9 @@ import {
   type ContainerProps,
 } from "@/components";
 
-import { FeaturedSection } from "@/sections";
-
 import { DessertBlogImage } from "@/sanity/schemas";
 import { urlForImage } from "@/sanity/utils";
-import {
-  getAllDessertSlugs,
-  getDessertBySlug,
-  getLatestDesserts,
-} from "@/sanity/queries";
+import { getAllDessertSlugs, getDessertBySlug } from "@/sanity/queries";
 
 export async function getStaticPaths() {
   const slugs = await getAllDessertSlugs();
@@ -39,24 +33,19 @@ export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
 ) {
   const dessert = await getDessertBySlug(context.params?.slug || "");
-  const latestDesserts = await getLatestDesserts(3);
 
   if (!dessert) return { notFound: true };
 
   return {
     props: {
       dessert,
-      latestDesserts,
     },
   };
 }
 
 type DessertDetailPageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-export default function DessertDetail({
-  dessert,
-  latestDesserts,
-}: DessertDetailPageProps) {
+export default function DessertDetail({ dessert }: DessertDetailPageProps) {
   return (
     <Layout title={`${dessert.name} | Benúla`}>
       <Section>
@@ -96,7 +85,6 @@ export default function DessertDetail({
           />
         </BlogContainer>
       </Section>
-      <FeaturedSection gridItems={latestDesserts} />
     </Layout>
   );
 }
