@@ -12,7 +12,6 @@ import {
 } from "@/components";
 import { FeaturedSection } from "@/sections";
 
-import waveSvg from "@/public/images/wave.svg";
 import coffeeMethodsImage from "@/public/images/coffee-methods.jpeg";
 import benulasImage from "@/public/images/benulas.jpeg";
 
@@ -70,28 +69,36 @@ export default function Home({
           <Box
             position="absolute"
             top={0}
-            maxWidth={["100%", "45%"]}
-            py="200px"
+            py={[0, "200px"]}
+            minHeight={["100vh", "100%"]}
+            width="100%"
+            display={["flex", "block"]}
+            flexDirection={["column", "unset"]}
+            justifyContent={["center", "unset"]}
+            alignItems={["center", "unset"]}
+            backgroundColor="rgba(0,0,0,.35)"
           >
             <Container>
-              <Heading as="h1" fontSize={["42px", "56px"]} color="white">
-                {firstDessert.name}
-              </Heading>
-              <Text color="white" mt={6} fontSize={["16px", "xl"]}>
-                {firstDessert.excerpt}
-              </Text>
-              <Box display={["block", "flex"]} mt={10}>
-                <Box mr={[0, 4]}>
-                  <ButtonLink
-                    href={`/postre-del-mes/${firstDessert.slug.current}`}
-                  >
-                    ver más
-                  </ButtonLink>
-                </Box>
-                <Box mt={[4, 0]}>
-                  <ButtonLink href="/postre-del-mes" variant="transparent">
-                    conoce todos los postres
-                  </ButtonLink>
+              <Box maxWidth={["100%", "45%"]}>
+                <Heading as="h1" fontSize={["42px", "56px"]} color="white">
+                  {firstDessert.name}
+                </Heading>
+                <Text color="white" mt={6} fontSize={["16px", "xl"]}>
+                  {firstDessert.excerpt}
+                </Text>
+                <Box display={["block", "flex"]} mt={10}>
+                  <Box mr={[0, 4]}>
+                    <ButtonLink
+                      href={`/postre-del-mes/${firstDessert.slug.current}`}
+                    >
+                      ver más
+                    </ButtonLink>
+                  </Box>
+                  <Box mt={[4, 0]}>
+                    <ButtonLink href="/postre-del-mes" variant="transparent">
+                      conoce todos los postres
+                    </ButtonLink>
+                  </Box>
                 </Box>
               </Box>
             </Container>
@@ -105,6 +112,7 @@ export default function Home({
         position="relative"
         backgroundImage={`/images/wave.svg`}
         backgroundPosition="bottom"
+        backgroundRepeat="no-repeat"
       >
         <Container>
           <Box

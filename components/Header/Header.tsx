@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { Box, type BoxProps, Button, Flex, Icon } from "@chakra-ui/react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { ButtonLink, type ButtonLinkProps, Container } from "@/components";
 
+import logoWhite from "@/public/images/logo-white.png";
+import logoBlack from "@/public/images/logo-black.png";
+
 type HeaderVariant = "default" | "transparent";
 
 type HeaderVariantStyleMap = {
   [Key in HeaderVariant]: {
     [P in "base" | "solid"]: {
-      logoUrl: string;
+      logo: StaticImageData;
       textColor: string;
       buttonLinkVariant: ButtonLinkProps["variant"];
       backgroundColor: string;
@@ -22,13 +25,13 @@ type HeaderVariantStyleMap = {
 const headerVariantsStyle: HeaderVariantStyleMap = {
   default: {
     base: {
-      logoUrl: "/images/logo-black.svg",
+      logo: logoBlack,
       textColor: "black",
       buttonLinkVariant: "primary",
       backgroundColor: "white",
     },
     solid: {
-      logoUrl: "/images/logo-black.svg",
+      logo: logoBlack,
       textColor: "black",
       buttonLinkVariant: "primary",
       backgroundColor: "white",
@@ -36,13 +39,13 @@ const headerVariantsStyle: HeaderVariantStyleMap = {
   },
   transparent: {
     base: {
-      logoUrl: "/images/logo-white.svg",
+      logo: logoWhite,
       textColor: "white",
       buttonLinkVariant: "transparent",
       backgroundColor: "transparent",
     },
     solid: {
-      logoUrl: "/images/logo-black.svg",
+      logo: logoBlack,
       textColor: "black",
       buttonLinkVariant: "primary",
       backgroundColor: "white",
@@ -96,7 +99,7 @@ function DesktopHeader({
             <Box>
               <Link href="/">
                 <Image
-                  src={variantStyles.logoUrl}
+                  src={variantStyles.logo}
                   width={90}
                   height={42}
                   alt="Benúla Logo"
@@ -156,10 +159,10 @@ function MobileHeader({
         <Container>
           <Box as="header" display={["block", "none"]} py={3}>
             <Flex justifyContent="space-between" alignItems="center">
-              <Box>
+              <Box position="relative" width="90px" height="42px">
                 <Link href="/">
                   <Image
-                    src={variantStyles.logoUrl}
+                    src={variantStyles.logo}
                     width={90}
                     height={42}
                     alt="Benúla Logo"
@@ -192,24 +195,31 @@ function MobileHeader({
           <Box
             position="absolute"
             width="100%"
+            minHeight="calc(100vh - 64px)"
             zIndex={1}
             background="#81191A"
-            py="120px"
             textAlign="center"
             color="white"
             fontWeight="semibold"
             fontSize="24px"
             boxShadow="md"
           >
-            <Box mb={6}>
-              <Link href="/">home</Link>
-            </Box>
-            <Box mb={6}>
-              <Link href="/menu">menú</Link>
-            </Box>
-            <Box>
-              <Link href="/postre-del-mes">postre del mes</Link>
-            </Box>
+            <Flex
+              minHeight="inherit"
+              flexDirection="column"
+              justifyContent="center"
+              alignContent="center"
+            >
+              <Box mb={6}>
+                <Link href="/">home</Link>
+              </Box>
+              <Box mb={6}>
+                <Link href="/menu">menú</Link>
+              </Box>
+              <Box>
+                <Link href="/postre-del-mes">postre del mes</Link>
+              </Box>
+            </Flex>
           </Box>
         </Collapsible.Content>
       </Collapsible.Root>
