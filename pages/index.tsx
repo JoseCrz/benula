@@ -18,7 +18,7 @@ import benulasImage from "@/public/images/benulas.jpeg";
 import {
   getLatestDesserts,
   getAllStaffMembers,
-  getLatestMenuItemsWithDetail,
+  getFeaturedMenuItems,
 } from "@/sanity/queries";
 import { urlForImage } from "@/sanity/utils";
 
@@ -26,7 +26,7 @@ export async function getStaticProps() {
   const [latestDesserts, latestMenuItemsWithDetail, staffMembers] =
     await Promise.all([
       getLatestDesserts(),
-      getLatestMenuItemsWithDetail(),
+      getFeaturedMenuItems(),
       getAllStaffMembers(),
     ]);
 
