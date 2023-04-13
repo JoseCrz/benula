@@ -41,6 +41,8 @@ export async function getStaticProps(
   const dessert = await getDessertBySlug(context.params?.slug || "");
   const latestDesserts = await getLatestDesserts(3);
 
+  if (!dessert) return { notFound: true };
+
   return {
     props: {
       dessert,

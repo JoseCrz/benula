@@ -24,6 +24,8 @@ export async function getStaticProps(
 ) {
   const menuItem = await getMenuItemBySlug(context.params?.slug || "");
 
+  if (!menuItem) return { notFound: true };
+
   return {
     props: {
       menuItem,
