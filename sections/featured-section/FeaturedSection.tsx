@@ -17,13 +17,17 @@ export function FeaturedSection({ gridItems }: FeaturedSectionProps) {
       <Container>
         <Flex flexDirection={["column", "row"]} justifyContent="space-between">
           <Heading as="h2" fontSize="42px">
-            café <Highlight>bello</Highlight>, postres{" "}
-            <Highlight>bellos</Highlight>
+            brunch en <Highlight>benúla</Highlight>
           </Heading>
-          <Text mt={[4, 0]} maxWidth={["100%", "565px"]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            varius enim in eros elementum tristique. Duis cursus, mi quis
-            viverra ornare, eros dolor interdum nulla.
+          <Text
+            mt={[4, 0]}
+            maxWidth={["100%", "565px"]}
+            fontSize="20px"
+            mr={["48px"]}
+          >
+            disponible en horario de 9:30am a 3:00pm.
+            <br />
+            aquí te dejamos algunos platillos destacados
           </Text>
         </Flex>
         <Grid
