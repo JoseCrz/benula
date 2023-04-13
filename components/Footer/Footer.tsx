@@ -4,6 +4,8 @@ import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import { FaWhatsapp, FaTiktok, FaFacebook, FaInstagram } from "react-icons/fa";
 import { Container, Section } from "@/components";
 
+import logoBlack from "@/public/images/logo-black.png";
+
 export function Footer() {
   return (
     <Section py={20}>
@@ -17,7 +19,7 @@ export function Footer() {
             <Box>
               <Link href="/">
                 <Image
-                  src="/images/logo-black.svg"
+                  src={logoBlack}
                   width={90}
                   height={42}
                   alt="Benúla Logo"
