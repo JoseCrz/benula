@@ -41,7 +41,9 @@ export default function DesertOfTheMonth({
             postre del mes
           </Heading>
           <Text fontSize="18px" mt={4}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            cada mes tendremos un chef o cocinero invitado para preparar
+            &quot;el postre del mes&quot; que estará disponible en nuestra carta
+            durante 30 días.
           </Text>
           <Flex
             flexDirection={["column", "row"]}
