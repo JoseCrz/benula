@@ -35,7 +35,7 @@ type MenuDetailPageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 export default function MenuDetail({ menuItem }: MenuDetailPageProps) {
   return (
-    <Layout title="Espiral de Pistache | Benúla">
+    <Layout title={`${menuItem.name} | Benúla`}>
       <Section backgroundColor="#FAFAFA">
         <Container pt={[18]} pb={[8]}>
           <Link href="/menu">
