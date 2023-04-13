@@ -29,6 +29,7 @@ export type MenuItem = {
     _type: "slug";
     current: string;
   };
+  isFeatured?: boolean;
 };
 
 export const menuItemType = defineType({
@@ -120,6 +121,13 @@ export const menuItemType = defineType({
           ],
         },
       ],
+    }),
+    defineField({
+      hidden: ({ document }) => !document?.hasDetailPage,
+      name: "isFeatured",
+      type: "boolean",
+      title: "destacar",
+      initialValue: false,
     }),
   ],
 });

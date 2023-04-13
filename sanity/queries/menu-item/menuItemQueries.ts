@@ -23,10 +23,10 @@ export async function getMenuItemBySlug(slug: string): Promise<MenuItem> {
 }
 
 const latestMenuItemsWithDetailPageQuery = groq`
-*[_type == "menuItem" && hasDetailPage == true && defined(slug.current)][0...6] | order(_updatedAt desc)
+*[_type == "menuItem" && isFeatured == true && defined(slug.current)][0...6] | order(_updatedAt desc)
 `;
 
-export async function getLatestMenuItemsWithDetail(): Promise<MenuItem[]> {
+export async function getFeaturedMenuItems(): Promise<MenuItem[]> {
   if (!sanityClient) return [];
 
   return (await sanityClient.fetch(latestMenuItemsWithDetailPageQuery)) || [];
