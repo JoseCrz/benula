@@ -150,6 +150,8 @@ type TabPanelProps = {
 
 function TabPanel({ menuCategory }: TabPanelProps) {
   const { isAvailable } = useAvailability(menuCategory);
+
+  if (!menuCategory.categoryItems) return null;
   const chunkSize = Math.ceil(menuCategory.categoryItems.length / 2);
   const chunks = chunk(menuCategory.categoryItems, chunkSize);
 
@@ -335,6 +337,8 @@ type AccordionContentProps = {
 const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
   ({ menuCategory, ...rest }, ref) => {
     const { isAvailable } = useAvailability(menuCategory);
+    if (!menuCategory.categoryItems) return null;
+
     return (
       <Accordion.Content ref={ref} asChild {...rest}>
         <Box
@@ -415,7 +419,9 @@ AccordionContent.displayName = "AccordionContent";
 // ==========================
 // Local Components
 type MenuItemLinkProps = {
-  menuItem: MenuPageProps["menuCategories"][number]["categoryItems"][number];
+  menuItem: NonNullable<
+    MenuPageProps["menuCategories"][number]["categoryItems"]
+  >[number];
 };
 
 function MenuItemLink({ menuItem }: MenuItemLinkProps) {
