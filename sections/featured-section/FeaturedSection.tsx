@@ -44,6 +44,8 @@ export function FeaturedSection({ gridItems }: FeaturedSectionProps) {
                 ? `/postre-del-mes/${item.slug.current}`
                 : `/menu/${item.slug?.current}`;
 
+            if (!itemImage) return null;
+
             return (
               <Box key={item._id}>
                 <Box
