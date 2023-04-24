@@ -132,89 +132,97 @@ function ImageGallery({ images }: ImageGalleryProps) {
     <>
       <Box ref={emblaMainRef} overflow="hidden">
         <Flex flexDirection="row" height="auto">
-          {images.map((image, index) => (
-            <Flex
-              key={image._key}
-              flex="0 0 100%"
-              minWidth={0}
-              position="relative"
-            >
-              <Box position="relative" width="100%">
-                <Box height="500px">
-                  <Image
-                    src={urlForImage(image).height(500).fit("clip").url()}
-                    fill
-                    alt={image.alt}
-                    placeholder="blur"
-                    blurDataURL={urlForImage(image)
-                      .height(500)
-                      .quality(10)
-                      .blur(1000)
-                      .fit("clip")
-                      .url()}
-                    style={{
-                      objectFit: "cover",
-                      objectPosition: "center",
-                    }}
-                    priority={index === 0}
-                  />
-                </Box>
-              </Box>
-            </Flex>
-          ))}
-        </Flex>
-      </Box>
-      <Box ref={emblaThumbsRef} mt={4} overflow="hidden">
-        <Flex flexDirection="row">
-          {images.map((image, index) => (
-            <Box
-              key={image._key}
-              flex="0 0 25%"
-              minWidth={0}
-              position="relative"
-              paddingRight={[4]}
-            >
-              <Button
-                backgroundColor="transparent"
-                height="auto"
-                onClick={() => onThumbnailClick(index)}
-                css={{
-                  "-webkit-appearance": "none",
-                  touchAction: "manipulation",
-                  display: "block",
-                  textDecoration: "none",
-                  cursor: "pointer",
-                  border: 0,
-                  padding: 0,
-                  margin: 0,
-                  width: "100%",
-                  opacity: index === selectedIndex ? 1 : 0.5,
-                  transition: "opacity 0.2s",
-                }}
+          {images.map((image, index) => {
+            if (!image) return null;
+
+            return (
+              <Flex
+                key={image._key}
+                flex="0 0 100%"
+                minWidth={0}
+                position="relative"
               >
                 <Box position="relative" width="100%">
-                  <Box height="96px">
+                  <Box height="500px">
                     <Image
-                      src={urlForImage(image).height(96).fit("clip").url()}
+                      src={urlForImage(image).height(500).fit("clip").url()}
                       fill
                       alt={image.alt}
                       placeholder="blur"
                       blurDataURL={urlForImage(image)
-                        .height(96)
+                        .height(500)
                         .quality(10)
                         .blur(1000)
+                        .fit("clip")
                         .url()}
                       style={{
                         objectFit: "cover",
                         objectPosition: "center",
                       }}
-                      priority
+                      priority={index === 0}
                     />
                   </Box>
                 </Box>
-              </Button>
-            </Box>
-          ))}
+              </Flex>
+            );
+          })}
+        </Flex>
+      </Box>
+      <Box ref={emblaThumbsRef} mt={4} overflow="hidden">
+        <Flex flexDirection="row">
+          {images.map((image, index) => {
+            if (!image) return null;
+
+            return (
+              <Box
+                key={image._key}
+                flex="0 0 25%"
+                minWidth={0}
+                position="relative"
+                paddingRight={[4]}
+              >
+                <Button
+                  backgroundColor="transparent"
+                  height="auto"
+                  onClick={() => onThumbnailClick(index)}
+                  css={{
+                    "-webkit-appearance": "none",
+                    touchAction: "manipulation",
+                    display: "block",
+                    textDecoration: "none",
+                    cursor: "pointer",
+                    border: 0,
+                    padding: 0,
+                    margin: 0,
+                    width: "100%",
+                    opacity: index === selectedIndex ? 1 : 0.5,
+                    transition: "opacity 0.2s",
+                  }}
+                >
+                  <Box position="relative" width="100%">
+                    <Box height="96px">
+                      <Image
+                        src={urlForImage(image).height(96).fit("clip").url()}
+                        fill
+                        alt={image.alt}
+                        placeholder="blur"
+                        blurDataURL={urlForImage(image)
+                          .height(96)
+                          .quality(10)
+                          .blur(1000)
+                          .url()}
+                        style={{
+                          objectFit: "cover",
+                          objectPosition: "center",
+                        }}
+                        priority
+                      />
+                    </Box>
+                  </Box>
+                </Button>
+              </Box>
+            );
+          })}
         </Flex>
       </Box>
     </>
