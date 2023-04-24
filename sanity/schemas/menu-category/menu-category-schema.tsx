@@ -60,6 +60,8 @@ export const menuCategoryType = defineType({
       title: "servicio limitado",
       type: "boolean",
       initialValue: false,
+      description:
+        "Al indicar servicio limitado es importante que todos los campos de abajo queden llenados, de lo contrario no se podrá actualizar la página.",
     }),
     defineField({
       name: "availability",
