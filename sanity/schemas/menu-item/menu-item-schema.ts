@@ -59,6 +59,8 @@ export const menuItemType = defineType({
       title: "agregar opciones",
       type: "boolean",
       initialValue: false,
+      description:
+        "Al indicar que el item tiene opciones es importante que todos los campos de abajo queden llenados, de lo contrario no se podrá actualizar la página.",
     }),
     defineField({
       hidden: ({ document }) => !document?.hasOptions,
@@ -88,6 +90,8 @@ export const menuItemType = defineType({
     defineField({
       name: "hasDetailPage",
       title: "agregar página de detalle",
+      description:
+        "Al agregar una página de detalle al item es importante que todos los campos de abajo queden llenados, de lo contrario no se podrá actualizar la página.",
       type: "boolean",
       initialValue: false,
     }),
@@ -112,6 +116,8 @@ export const menuItemType = defineType({
       hidden: ({ document }) => !document?.hasDetailPage,
       name: "images",
       title: "imagenes",
+      description:
+        'Es importante que todas las imagenes sean "validas", lo que significa que ninguna puede quedar cómo "untitled", de lo contrario no se podrá actualizar la página.',
       type: "array",
       of: [
         {
@@ -122,6 +128,7 @@ export const menuItemType = defineType({
         },
       ],
     }),
+
     defineField({
       hidden: ({ document }) => !document?.hasDetailPage,
       name: "isFeatured",
