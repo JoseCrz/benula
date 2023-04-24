@@ -3,6 +3,16 @@ import { IoFastFoodOutline } from "react-icons/io5";
 
 export const MENU_ITEM_NAME = "menuItem";
 
+type SanityImage = {
+  _key: string;
+  _type: "image";
+  asset?: {
+    _ref: string;
+    _type: string;
+  };
+  alt: string;
+};
+
 export type MenuItem = {
   _id: string;
   _type: "menuItem";
@@ -15,15 +25,7 @@ export type MenuItem = {
     optionDescription: string;
   }[];
   hasDetailPage: boolean;
-  images: {
-    _key: string;
-    _type: "image";
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-    alt: string;
-  }[];
+  images: (SanityImage | undefined)[];
   description?: string;
   slug?: {
     _type: "slug";
