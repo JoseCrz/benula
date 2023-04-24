@@ -11,7 +11,7 @@ export type MenuCategory = {
   _type: "menuCategory";
   name: string;
   placement: number;
-  categoryItems: CategoryItem[];
+  categoryItems?: CategoryItem[];
   hasLimitedAvailability: boolean;
   availability?: {
     startTime: number;
@@ -54,6 +54,7 @@ export const menuCategoryType = defineType({
           ],
         },
       ],
+      validation: (Rule) => Rule.min(1).required(),
     }),
     defineField({
       name: "hasLimitedAvailability",
