@@ -22,12 +22,22 @@ export async function getMenuItemBySlug(slug: string): Promise<MenuItem> {
   return await sanityClient.fetch(menuItemBySlugQuery, { slug });
 }
 
-const latestMenuItemsWithDetailPageQuery = groq`
-*[_type == "menuItem" && isFeatured == true && defined(slug.current)][0...6] | order(_updatedAt desc)
+const menuItemsFeaturedQuery = groq`
+*[_type == "menuItem" && isFeatured == true && defined(slug.current)] | order(_updatedAt desc)
 `;
 
 export async function getFeaturedMenuItems(): Promise<MenuItem[]> {
   if (!sanityClient) return [];
 
-  return (await sanityClient.fetch(latestMenuItemsWithDetailPageQuery)) || [];
+  return (await sanityClient.fetch(menuItemsFeaturedQuery)) || [];
+}
+
+const menuItemsInCarouselQuery = groq`
+*[_type == "menuItem" && isInCarousel == true && defined(slug.current)] | order(_updatedAt desc)
+`;
+
+export async function getMenuItemsInCarousel(): Promise<MenuItem[]> {
+  if (!sanityClient) return [];
+
+  return (await sanityClient.fetch(menuItemsInCarouselQuery)) || [];
 }
