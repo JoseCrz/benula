@@ -13,7 +13,7 @@ import {
 import { FeaturedSection } from "@/sections";
 
 import coffeeMethodsImage from "@/public/images/coffee-methods.jpeg";
-import benulasImage from "@/public/images/benulas.jpeg";
+import aboutUsImage from "@/public/images/about-us.jpg";
 
 import {
   getLatestDesserts,
@@ -279,8 +279,8 @@ export default function Home({
               </Box>
               <Box mx={[-4, 0]}>
                 <Image
-                  src={benulasImage}
-                  alt="paula y benjamín afuera de benúla"
+                  src={aboutUsImage}
+                  alt="Una chica caminando afuera de benúla"
                   placeholder="blur"
                 />
               </Box>
