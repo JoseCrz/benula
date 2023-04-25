@@ -2,14 +2,14 @@ import { groq } from "next-sanity";
 import { sanityClient } from "@/sanity/client";
 import { dessertType, type Dessert } from "@/sanity/schemas";
 
-const latestDessertsQuery = groq`
-  *[_type == "${dessertType.name}"][0...$amount] | order(date desc)
+const latestDessertQuery = groq`
+  *[_type == "${dessertType.name}"] | order(date desc)[0]
 `;
 
-export async function getLatestDesserts(amount = 5): Promise<Dessert[]> {
-  if (!sanityClient) return [];
+export async function getLatestDessert(): Promise<Dessert> {
+  if (!sanityClient) return {} as any;
 
-  return await sanityClient.fetch(latestDessertsQuery, { amount });
+  return await sanityClient.fetch(latestDessertQuery);
 }
 
 const getAllDessertsQuery = groq`
