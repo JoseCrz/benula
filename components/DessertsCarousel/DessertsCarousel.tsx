@@ -71,9 +71,9 @@ export function DessertsCarousel({ menuItems }: CarouselProps) {
                       <Heading color="white" display="inline" fontSize="40px">
                         {menuItem.name}{" "}
                       </Heading>
-                      {menuItem.description && (
+                      {menuItem.excerpt && (
                         <Text fontSize="20px" color="white">
-                          {menuItem.description}
+                          {menuItem.excerpt}
                         </Text>
                       )}
                     </Box>
