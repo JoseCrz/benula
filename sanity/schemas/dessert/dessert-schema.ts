@@ -68,6 +68,8 @@ export const dessertType = defineType({
       name: "slug",
       title: "slug",
       type: "slug",
+      description:
+        "Asegurate de no dejar espacios en blanco al principio o al final del slug",
       validation: (rule) => rule.required(),
       options: {
         source: "name",
