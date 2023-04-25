@@ -108,10 +108,10 @@ export default function DesertOfTheMonth({
                 borderBottom={["1px solid #DADADA", "none"]}
                 pb={[10, 0]}
               >
-                <Box position="relative" width="100%" height="300px">
+                <Box position="relative" width="100%" height="400px">
                   <Image
                     src={urlForImage(dessert.coverImage.asset)
-                      .height(300)
+                      .height(400)
                       .url()}
                     alt={dessert.coverImage.alt}
                     style={{ objectFit: "cover", objectPosition: "center" }}
