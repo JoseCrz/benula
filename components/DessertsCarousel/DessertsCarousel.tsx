@@ -59,6 +59,7 @@ export function DessertsCarousel({ menuItems }: CarouselProps) {
                   width="100%"
                   px={[6, 12]}
                   py={[10, 16]}
+                  backgroundColor="rgba(0,0,0,.30)"
                 >
                   <Flex
                     width="100%"
