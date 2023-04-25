@@ -102,6 +102,8 @@ export const menuItemType = defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
+      description:
+        "Asegurate de no dejar espacios en blanco al principio o al final del slug",
       options: {
         source: "name",
         maxLength: 96,
