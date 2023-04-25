@@ -16,25 +16,28 @@ import coffeeMethodsImage from "@/public/images/coffee-methods.jpeg";
 import aboutUsImage from "@/public/images/about-us.jpg";
 
 import {
-  getLatestDesserts,
+  getLatestDessert,
+  getMenuItemsInCarousel,
   getAllStaffMembers,
   getFeaturedMenuItems,
 } from "@/sanity/queries";
 import { urlForImage } from "@/sanity/utils";
 
 export async function getStaticProps() {
-  const [latestDesserts, latestMenuItemsWithDetail, staffMembers] =
+  const [latestDessert, menuItemsInCarousel, menuItemsFeatured, staffMembers] =
     await Promise.all([
-      getLatestDesserts(),
+      getLatestDessert(),
+      getMenuItemsInCarousel(),
       getFeaturedMenuItems(),
       getAllStaffMembers(),
     ]);
 
   return {
     props: {
+      latestDessert,
+      menuItemsInCarousel,
+      menuItemsFeatured,
       staffMembers,
-      latestDesserts,
-      latestMenuItemsWithDetail,
     },
   };
 }
@@ -42,11 +45,11 @@ export async function getStaticProps() {
 type HomePageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 export default function Home({
+  latestDessert,
   staffMembers,
-  latestDesserts,
-  latestMenuItemsWithDetail,
+  menuItemsInCarousel,
+  menuItemsFeatured,
 }: HomePageProps) {
-  const [firstDessert, ...restOfDesserts] = latestDesserts;
   return (
     <Layout title="Benúla" headerVariant="transparent">
       <Section mt={["-66px", "-90px"]}>
@@ -57,8 +60,8 @@ export default function Home({
           minHeight={["100vh", "auto"]}
         >
           <Image
-            src={urlForImage(firstDessert.coverImage.asset).height(865).url()}
-            alt={firstDessert.coverImage.alt}
+            src={urlForImage(latestDessert.coverImage.asset).height(865).url()}
+            alt={latestDessert.coverImage.alt}
             priority
             style={{
               objectFit: "cover",
@@ -81,15 +84,15 @@ export default function Home({
             <Container>
               <Box maxWidth={["100%", "45%"]}>
                 <Heading as="h1" fontSize={["42px", "56px"]} color="white">
-                  {firstDessert.name}
+                  {latestDessert.name}
                 </Heading>
                 <Text color="white" mt={6} fontSize={["16px", "xl"]}>
-                  {firstDessert.excerpt}
+                  {latestDessert.excerpt}
                 </Text>
                 <Box display={["block", "flex"]} mt={10}>
                   <Box mr={[0, 4]}>
                     <ButtonLink
-                      href={`/postre-del-mes/${firstDessert.slug.current}`}
+                      href={`/postre-del-mes/${latestDessert.slug.current}`}
                     >
                       ver más
                     </ButtonLink>
@@ -125,9 +128,9 @@ export default function Home({
         </Container>
       </Section>
       <Section backgroundColor="#FAFAFA" pb={12}>
-        <DessertsCarousel desserts={restOfDesserts} />
+        <DessertsCarousel menuItems={menuItemsInCarousel} />
       </Section>
-      <FeaturedSection gridItems={latestMenuItemsWithDetail} />
+      <FeaturedSection gridItems={menuItemsFeatured} />
       <Section position="relative" width="100%" height={["607px", "378px"]}>
         <Image
           src={coffeeMethodsImage}
