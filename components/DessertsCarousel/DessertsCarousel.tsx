@@ -4,12 +4,12 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ButtonLink } from "@/components";
 
-import type { Dessert } from "@/sanity/schemas";
-import { getDateString, urlForImage } from "@/sanity/utils";
+import type { MenuItem } from "@/sanity/schemas";
+import { urlForImage } from "@/sanity/utils";
 
-type CarouselProps = { desserts: Dessert[] };
+type CarouselProps = { menuItems: MenuItem[] };
 
-export function DessertsCarousel({ desserts }: CarouselProps) {
+export function DessertsCarousel({ menuItems }: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [activeSnap, setActiveSnap] = useState(0);
@@ -24,85 +24,78 @@ export function DessertsCarousel({ desserts }: CarouselProps) {
     emblaApi.on("select", () => setActiveSnap(emblaApi.selectedScrollSnap()));
   }, [emblaApi]);
 
+  if (menuItems.length === 0) return null;
+
   return (
     <Box ref={emblaRef} overflow="hidden">
       <Flex flexDirection="row" height="auto">
-        {desserts.map((dessert) => (
+        {menuItems.map((menuItem) => (
           <Box
-            key={dessert._id}
+            key={menuItem._id}
             flex={["0 0 300px", "0 0 1049px"]}
             minWidth={0}
             position="relative"
             paddingLeft={[3, 12]}
           >
-            <Box position="relative">
-              <Box height={[600]}>
-                <Image
-                  src={urlForImage(dessert.coverImage.asset).height(600).url()}
-                  alt={dessert.coverImage.alt}
-                  style={{
-                    objectFit: "cover",
-                    objectPosition: "center",
-                  }}
-                  fill
-                />
-              </Box>
-              <Box
-                position="absolute"
-                top={0}
-                bottom={0}
-                width="100%"
-                px={[6, 12]}
-                py={[10, 16]}
-              >
-                <Flex
+            {!menuItem.images[0]?.asset ? null : (
+              <Box position="relative">
+                <Box height={[600]}>
+                  <Image
+                    src={urlForImage(menuItem.images[0].asset)
+                      .height(600)
+                      .url()}
+                    alt={menuItem.images[0].alt}
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "center",
+                    }}
+                    fill
+                  />
+                </Box>
+                <Box
+                  position="absolute"
+                  top={0}
+                  bottom={0}
                   width="100%"
-                  height="100%"
-                  flexDirection="column"
-                  justifyContent="space-between"
+                  px={[6, 12]}
+                  py={[10, 16]}
                 >
-                  <Box>
-                    <Text
-                      width="fit-content"
-                      px="4px"
-                      backgroundColor="white"
-                      color="#1B1B1B"
-                      fontSize="20px"
-                      fontWeight="bold"
-                      borderRadius="4px"
-                    >
-                      {dessert.collaborator}
-                    </Text>
-                    <Heading color="white" display="inline" fontSize="40px">
-                      {dessert.name}{" "}
-                    </Heading>
-
-                    <Text fontSize="20px" color="white">
-                      postre de {getDateString(dessert.date)}
-                    </Text>
-                  </Box>
-                  <Box>
-                    <Box display={["block", "flex"]}>
-                      <Box mr={[0, 4]}>
-                        <ButtonLink
-                          href={`/postre-del-mes/${dessert.slug.current}`}
-                        >
-                          ver más
-                        </ButtonLink>
-                      </Box>
-                      <Box mt={[4, 0]}>
-                        <ButtonLink
-                          href="/postre-del-mes"
-                          variant="transparent"
-                        >
-                          conoce todos los postres
-                        </ButtonLink>
+                  <Flex
+                    width="100%"
+                    height="100%"
+                    flexDirection="column"
+                    justifyContent="space-between"
+                  >
+                    <Box>
+                      <Heading color="white" display="inline" fontSize="40px">
+                        {menuItem.name}{" "}
+                      </Heading>
+                      {menuItem.description && (
+                        <Text fontSize="20px" color="white">
+                          {menuItem.description}
+                        </Text>
+                      )}
+                    </Box>
+                    <Box>
+                      <Box display={["block", "flex"]}>
+                        {menuItem.slug && (
+                          <Box mr={[0, 4]}>
+                            <ButtonLink href={`/menu/${menuItem.slug.current}`}>
+                              ver más
+                            </ButtonLink>
+                          </Box>
+                        )}
+                        <Box mt={[4, 0]}>
+                          <ButtonLink href="/menu" variant="transparent">
+                            conoce todos los postres
+                          </ButtonLink>
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
-                </Flex>
+                  </Flex>
+                </Box>
               </Box>
-            </Box>
+            )}
           </Box>
         ))}
       </Flex>
