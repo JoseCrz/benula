@@ -32,6 +32,7 @@ export type MenuItem = {
     current: string;
   };
   isFeatured?: boolean;
+  isInCarousel?: boolean;
 };
 
 export const menuItemType = defineType({
@@ -132,12 +133,18 @@ export const menuItemType = defineType({
         },
       ],
     }),
-
+    defineField({
+      hidden: ({ document }) => !document?.hasDetailPage,
+      name: "isInCarousel",
+      type: "boolean",
+      title: "agregar al carousel de postres",
+      initialValue: false,
+    }),
     defineField({
       hidden: ({ document }) => !document?.hasDetailPage,
       name: "isFeatured",
       type: "boolean",
-      title: "destacar",
+      title: "agregar a la sección de destacados",
       initialValue: false,
     }),
   ],
