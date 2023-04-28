@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import { Analytics } from "@vercel/analytics/react";
 import { Roboto } from "@next/font/google";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <main className={roboto.className}>
         <Component {...pageProps} />
       </main>
+      <Analytics />
     </ChakraProvider>
   );
 }
