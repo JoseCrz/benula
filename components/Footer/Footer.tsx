@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Box, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text, Link as ChakraLink } from "@chakra-ui/react";
 import { FaWhatsapp, FaTiktok, FaFacebook, FaInstagram } from "react-icons/fa";
 import { Container, Section } from "@/components";
 
@@ -193,7 +193,25 @@ export function Footer() {
             </Box>
           </Flex>
           <Text textAlign="center" mt={8} fontSize={["12px", "16px"]}>
-            2022 Benúla. Todos los derechos reservados
+            {new Date().getFullYear()} Benúla. Todos los derechos reservados
+          </Text>
+          <Text textAlign="center" fontSize="12px" mt={2}>
+            diseñado por{" "}
+            <ChakraLink
+              href="https://www.instagram.com/memopoblete/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              memo poblete
+            </ChakraLink>{" "}
+            y desarrollado por{" "}
+            <ChakraLink
+              href="https://www.instagram.com/josecueram/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              josé cuevas
+            </ChakraLink>
           </Text>
         </Box>
       </Container>
