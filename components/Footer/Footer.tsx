@@ -88,7 +88,7 @@ export function Footer() {
                   />
                 </Link>
                 <Link
-                  href="https://www.tiktok.com/@benulapostreria"
+                  href="https://www.tiktok.com/@bbenulapostreria"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
