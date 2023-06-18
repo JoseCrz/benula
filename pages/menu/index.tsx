@@ -499,7 +499,7 @@ function createAvailabityMap(
     availabilityMap[i] = "unavailable";
   }
 
-  for (let i = availabitity.startTime; i <= availabitity.endTime; i++) {
+  for (let i = availabitity.startTime; i < availabitity.endTime; i++) {
     availabilityMap[i] = "available";
   }
 
