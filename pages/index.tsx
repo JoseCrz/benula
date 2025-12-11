@@ -50,6 +50,7 @@ export default function Home({
   menuItemsInCarousel,
   menuItemsFeatured,
 }: HomePageProps) {
+  console.log("Trigger Redeploy");
   return (
     <Layout title="Benúla" headerVariant="transparent">
       <Section mt={["-66px", "-90px"]}>
